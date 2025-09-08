@@ -2109,7 +2109,7 @@
         "name": "LoadBoolean",
         "kind": "Method",
         "detail": "LoadBoolean: (name: string, default: boolean, file: string)",
-        "doc": "Load a saved boolean value to remember varibale values between multiple app starts.",
+        "doc": "Load a saved boolean value to remember variable values between multiple app starts.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {boolean} `default` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"default: boolean","desc":"","type":"boolean"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.LoadBoolean(name: string, default: boolean, file: string)"
@@ -2118,7 +2118,7 @@
         "name": "LoadNumber",
         "kind": "Method",
         "detail": "LoadNumber: (name: string, default: number, file: string)",
-        "doc": "Load a saved number value to remember varibale values between multiple app starts.",
+        "doc": "Load a saved number value to remember variable values between multiple app starts.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {number} `default` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"default: number","desc":"","type":"number"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.LoadNumber(name: string, default: number, file: string)"
@@ -2127,7 +2127,7 @@
         "name": "LoadJson",
         "kind": "Method",
         "detail": "LoadJson: (name: string, default: object, file: string)",
-        "doc": "Load a saved json object to remember varibale values between multiple app starts.",
+        "doc": "Load a saved json object to remember variable values between multiple app starts.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {object} `default` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"default: object","desc":"","type":"object"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.LoadJson(name: string, default: object, file: string)"
@@ -2154,7 +2154,7 @@
         "name": "LoadText",
         "kind": "Method",
         "detail": "LoadText: (name: string, default: string, file: string)",
-        "doc": "Load saved text value to remember varibale values between multiple app starts.",
+        "doc": "Load saved text value to remember variable values between multiple app starts.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {string} `default` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"default: string","desc":"","type":"string"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.LoadText(name: string, default: string, file: string)"
@@ -2397,7 +2397,7 @@
         "name": "SaveBoolean",
         "kind": "Method",
         "detail": "SaveBoolean: (name: string, value: boolean, file: string)",
-        "doc": "Save a boolean value to remember varibale values between multiple app starts.",
+        "doc": "Save a boolean value to remember variable values between multiple app starts.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {boolean} `value` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"value: boolean","desc":"","type":"boolean"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.SaveBoolean(name: string, value: boolean, file: string)"
@@ -2415,7 +2415,7 @@
         "name": "SaveNumber",
         "kind": "Method",
         "detail": "SaveNumber: (name: string, value: number, file: string)",
-        "doc": "Save a number value to remember varibale values between multiple app starts and updates.",
+        "doc": "Save a number value to remember variable values between multiple app starts and updates.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {number} `value` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"value: number","desc":"","type":"number"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.SaveNumber(name: string, value: number, file: string)"
@@ -2424,7 +2424,7 @@
         "name": "SaveJson",
         "kind": "Method",
         "detail": "SaveJson: (name: string, value: object, file: string)",
-        "doc": "Save a json object to remember varibale values between multiple app starts and updates.",
+        "doc": "Save a json object to remember variable values between multiple app starts and updates.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {object} `value` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"value: object","desc":"","type":"object"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.SaveJson(name: string, value: object, file: string)"
@@ -2433,7 +2433,7 @@
         "name": "SaveText",
         "kind": "Method",
         "detail": "SaveText: (name: string, value: string, file: string)",
-        "doc": "Save a text value to remember varibale values between multiple app starts and updates.",
+        "doc": "Save a text value to remember variable values between multiple app starts and updates.",
         "param": "\n*@param* {string} `name` - \n\n*@param* {string} `value` - \n\n*@param* {string} `file` - String path to file ( “/absolute/...” or “relative/...” )\n",
         "params": [{"name":"name: string","desc":"","type":"string"},{"name":"value: string","desc":"","type":"string"},{"name":"file: string","desc":"String path to file ( “/absolute/...” or “relative/...” )","type":"string"}],
         "call": "app.SaveText(name: string, value: string, file: string)"

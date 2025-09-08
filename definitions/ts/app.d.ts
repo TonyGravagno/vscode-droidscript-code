@@ -1118,7 +1118,7 @@ declare class DsApp {
 	/** Asynchronously import a .js file */
 	LoadScript(path: str_pth, callback?: (info: { isTrusted: bin }) => void): void;
 
-	/** Load saved text value to remember varibale values between multiple app starts */
+	/** Load saved text value to remember variable values between multiple app starts */
 	LoadText(name: str, dflt?: str, file?: str_ptf): str;
 
 	/** Lock the device */

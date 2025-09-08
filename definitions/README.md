@@ -23,7 +23,7 @@ Type checking in the vscode-extension is based on typescript definition files th
 
 Initially after enabling type checking you might be overwhelmed with red wall full of error messages, but this guide will help you get through that!
 
-Probably the most number of errors are caused by undeclared global variables. I's important to remember that you need to **declare** all varibales in order to assign a type to them. This is done with the `var`, `let` or `const` keyword. Do this for all your local and global variables. This is an example of a typed 'Hello World' app:
+Probably the most number of errors are caused by undeclared global variables. I's important to remember that you need to **declare** all variables in order to assign a type to them. This is done with the `var`, `let` or `const` keyword. Do this for all your local and global variables. This is an example of a typed 'Hello World' app:
 
 ```js
 /** @type {DsButton} */
@@ -83,7 +83,7 @@ The most common ones are `@type`, `@param` and `@return`.
 Here are some examples using JSDoc:
 ```js
 /** 
- * Represents a numberic varibale `age` 
+ * Represents a numberic variable `age` 
  * @type {number}
  */
 var age;
