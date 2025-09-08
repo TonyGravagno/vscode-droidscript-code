@@ -1524,7 +1524,7 @@
         "name": "GetPermission",
         "kind": "Method",
         "detail": "GetPermission: (type: string, callback: function)",
-        "doc": "GetPermission accepts a list of 'dangerus' classified permissions and returns a list of ungranted permissions in the **callback** function, or in case of only “ExtSDCard” the path URI of the user-selected folder.",
+        "doc": "GetPermission accepts a list of 'dangerous' classified permissions and returns a list of ungranted permissions in the **callback** function, or in case of only “ExtSDCard” the path URI of the user-selected folder.",
         "param": "\n*@param* {string} `type` - String comma “,” separated Camera|ExtSDcard|External|Internal|Network|Storage|Overlay|SMS|Location|Calendar|Body|Contacts|Record|Phone|Biometric|Accounts|License|usb:<pid:num>\n\n*@param* {function} `callback` - String comma “,” separated Camera|ExtSDcard|External|Internal|Network|Storage|Overlay|SMS|Location|Calendar|Body|Contacts|Record|Phone|Biometric|Accounts|License|usb:<pid:num>\n",
         "params": [{"name":"type: string","desc":"String comma “,” separated Camera|ExtSDcard|External|Internal|Network|Storage|Overlay|SMS|Location|Calendar|Body|Contacts|Record|Phone|Biometric|Accounts|License|usb:<pid:num>","type":"string"},{"name":"callback: function","desc":"String comma “,” separated Camera|ExtSDcard|External|Internal|Network|Storage|Overlay|SMS|Location|Calendar|Body|Contacts|Record|Phone|Biometric|Accounts|License|usb:<pid:num>","type":"function"}],
         "call": "app.GetPermission(type: string, callback: function)"
