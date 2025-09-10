@@ -8,11 +8,12 @@
 ## Connecting to a device
 - Command `droidscript-code.connect` launches `connect-to-droidscript.js`, which cycles through `serverIPs[]` and `PORTs[]` from `dsconfig.json`, updating the status bar for each attempt and prompting only after all stored pairs fail【F:src/commands/connect-to-droidscript.js†L16-L41】.
 - Successful connections move the working IP and port to the head of those arrays and save them alongside `serverIP` and `PORT`【F:src/commands/connect-to-droidscript.js†L69-L107】.
-- `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer; on close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js†L19-L85】【F:src/websocket.js†L98-L107】.
+- `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer; on close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js†L19-L89】【F:src/websocket.js†L102-L111】.
 - When the connection comes up, `downloadDefinitions()` copies `.d.ts` files from the device into `~/.droidscript/definitions/ts` so UI metadata is cached locally【F:extension.js†L777-L795】.
 
 ## Disconnect behavior
 - When the WebSocket closes, `onDebugServerStop()` hides status‑bar items, clears the current project name, refreshes tree views, and prompts the user to reconnect【F:extension.js†L832-L840】.
+- Manual disconnects call `terminate()` rather than a normal WebSocket close because the DroidScript server replies with the reserved status code `1005`, which `ws` treats as a `RangeError`.
 
 ## Opening a device project locally
 - Selecting a project in the Projects view calls `openProject()`, which looks for an existing local copy or prompts for a target folder and records it in `dsconfig.json`【F:extension.js†L876-L930】.
