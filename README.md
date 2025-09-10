@@ -4,7 +4,7 @@
 
 [DroidScript](https://droidscript.org/) is an easy to use, portable coding tool which simplifies android app development. It dramatically improves productivity by speeding up development by as much as 10x compared with using the standard development tools.
 
-It’s also an ideal tool for learning JavaScript, you can literally code anywhere with DroidScript, it’s not cloud based and doesn’t require an internet connection.
+It's also an ideal tool for learning JavaScript, you can literally code anywhere with DroidScript, it's not cloud based and doesn't require an internet connection.
 
 Unlike other development tools which take hours to install and eat up gigabytes of disk space, you can install DroidScript in your phone and start using it within 30 seconds!
 

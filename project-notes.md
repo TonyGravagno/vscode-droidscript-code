@@ -26,7 +26,7 @@
 
 ## Commands and keybindings
 - `package.json` exposes run, stop, project management, and utility commands; default keybindings map `alt+r` to run and `alt+s` to stop.
-- Any command ID listed in `package.json` can be assigned a custom shortcut through VS Code’s Keyboard Shortcuts settings.
+- Any command ID listed in `package.json` can be assigned a custom shortcut through VS Code's Keyboard Shortcuts settings.
 
 ## Device UI and assets
 - `extractAssets()` clears and recreates `~/.droidscript` subfolders (`samples` and `definitions`) from extension resources.
@@ -41,7 +41,7 @@
 - Completion and signature providers parse the surrounding text to feed matching data from `scopesJson` into VS Code APIs.
 
 ## Configuration files
-- `dsconfig.json` in the user’s home directory stores server IP/port history (`serverIPs`, `PORTs`), known local projects, and per‑version metadata.
+- `dsconfig.json` in the user's home directory stores server IP/port history (`serverIPs`, `PORTs`), known local projects, and per‑version metadata.
 - Each project may provide a `jsconfig.json` whose `exclude` globs guide sync operations; a default configuration is bundled for projects lacking one.
 
 ## Possible Problems
