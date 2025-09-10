@@ -116,7 +116,9 @@
   * Insert `let`/`const` at the correct block, not blindly `var`.
   * (This can then be packaged as a VS Code **CodeAction** / Quick Fix tied to diagnostics.)
 
-### If you want to keep this file (incremental hardening checklist)
+### Possible Enhancements / Fixes
+
+This is a incremental hardening checklist:
 
 1. **Replace all string-based `.match("...")` uses with real `RegExp` objects**, fully escaping identifiers:
 
@@ -140,4 +142,8 @@
 
 ---
 
-Bottom line: this file clearly aims to be a "SmartDeclare" pass for legacy JS, but it's **fragile** as written (regex issues, scope semantics, string-match mistakes). For production use, wire ESLint/TS for diagnostics and, if you want one-click fixes, implement an **AST-aware** CodeAction instead.
+### Bottom Line on SmartDeclare
+
+This file clearly aims to be a "SmartDeclare" pass for legacy JS, but it's **fragile** as written (regex issues, scope semantics, string-match mistakes). For production use, wire ESLint/TS for diagnostics and, if you want one-click fixes, implement an **AST-aware** CodeAction instead.
+
+(Review by GPT5)
