@@ -3,7 +3,8 @@
 Notable releases.
 
 ### Version 0.3.6 (Unreleased)
-- remember successful connections and automatically cycle through stored IP:Port pairs on reconnect
+- Remember successful connections and automatically cycle through stored IP:Port pairs on reconnect
+- Fixed error from invalid WS status code 1005 from DS on disconnect.
 
 ### Version 0.3.5 Alpha (2025-09-03)
 This is an unofficial alpha - use at your own risk. Get backups!  
@@ -11,13 +12,13 @@ See notes and track updates [here](./v0.3.5.md).
 
 ### Version 0.3.4 (2024-03-29)  
 (See [Highlights](./Highlights.md))  
-- improved IDE command palette
-- re- / disconnect commands & buttons
-- added `.dsproj` activation event
-- auto detect project on run
-- assets are now re-extracted when missing
-- fixed bug which sometimes saved files to the wrong project
-- fixed bug when creating files that opened two projects
+- Improved IDE command palette
+- Re- / disconnect commands & buttons
+- Added `.dsproj` activation event
+- Auto detect project on run
+- Assets are now re-extracted when missing
+- Fixed bug which sometimes saved files to the wrong project
+- Fixed bug when creating files that opened two projects
 
 ### Version 0.3.3 (2024-01-24)
 - Tracking **all** unsaved changes while disconnected, confirm dialog
