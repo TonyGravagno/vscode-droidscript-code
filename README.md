@@ -92,15 +92,15 @@ This extension provides basic intellisense for `app`, `ui` and `MUI` scopes. You
 
 ## Advanced Intellisense
 
-Since version 2.3.0 you can use the integrated VSCode intellisense to help writing better code. To enable native type checks, right-click on a project in the project tree view and click `Enable Types`. This will add a `jsconfig.json` file to your project with a basic tslint configuration.
+Use the integrated VSCode Intellisense to help writing better code. To enable native type checks, right-click on a Project in the Project tree view (not file Explorer) and click `Enable Types`. This will add a `jsconfig.json` file to your project with a basic TSLint configuration.
 
-Initially you might see dozens of type errors in your source files. You can use the `Smart Declare Variables` feature by right-clicking on the project or a file in the vscode explorer, which then scans and automatically adds missing variable declarations on the fly. This should greatly reduce the remaining errors which you will have to address on your own.\
-**Note:** SmartDeclare is based on regular expressions and doesnt have a structural understanding of your code. Use at your own risk. Simply undo the changes if the resulting changes are largely undesired.
+Initially you might see dozens of type errors in your source files. You can use the `Smart Declare Variables` feature by right-clicking on the Project or a file in the VSCode Explorer, which then scans and automatically adds missing variable declarations on the fly. This should greatly reduce the remaining errors which you will have to address on your own.\
+**Note:** SmartDeclare (unique and built-in to this project) is based on regular expressions and doesn't have a structural understanding of your code. Use at your own risk. Simply undo the changes if the resulting changes are largely undesired.
 
 ## Best Practices
 
 - Everytime you start editing your project, it is a good idea to reload the files to fetch any changes on the Project. Click the **Reload** button in the bottom of VS Code and select your desired action from the quickpick dialog.
-- When you are working in VS Code, **DO NOT EDIT THE FILES IN THE WIFI IDE**.
+- When you are working in VS Code, **DO NOT EDIT THE FILES IN THE WEB-BASED WIFI IDE**.
 
 ## Known Issues
 
