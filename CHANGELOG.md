@@ -5,6 +5,7 @@ Notable releases.
 ### Version 0.3.6 (Unreleased)
 - Remember successful connections and automatically cycle through stored IP:Port pairs on reconnect
 - Fixed error from invalid WS status code 1005 from DS on disconnect.
+- Removed debug line causing error log and stray number output in log.
 
 ### Version 0.3.5 Alpha (2025-09-03)
 This is an unofficial alpha - use at your own risk. Get backups!  

@@ -78,8 +78,6 @@ async function wsOnOpen() {
     CONNECTED = true;
 
     Logger("Connected: " + DSCONFIG.serverIP);
-
-    webSocket?.send("debug");
     webSocketKeepAliveTimer = setInterval(function () {
         // Debug.Log("sending keepalive");
         webSocket?.send("keepalive");
