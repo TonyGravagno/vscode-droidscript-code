@@ -1,12 +1,12 @@
 # AGENTS
 
-This repository contains a VSCode extension for remote development with DroidScript. See [how-it-works.md](./how-it-works.md) for full architectural details.
+This repository contains a VSCode extension for remote development with DroidScript. See [how-it-works.md](./how-it-works.md) for full architectural details. [project-notes.md](./project-notes.md) contains raw notes used to create the other document, and may contain additional insight. README.md is an introduction to the user/developer expectations of the software - it should help to understand this while working on the software.
 
 ### Coding Conventions
 
 #### All code
 - Ensure code is modular, well-structured, and well-commented.
-- Ensure existing function docs are accurate. Add inline comments to code wherever it seems to help add clarity - document why code exists, not just how it does it.
+- Ensure existing how-it-works and project-notes docs are accurate. Add inline comments to code wherever it seems to help add clarity - document why code exists, not just how it does it.
 
 #### JavaScript / TypeScript
 - Use ESM, ES2022+ for NodeJS v22+ with JSDoc and TSDoc.
@@ -14,11 +14,12 @@ This repository contains a VSCode extension for remote development with DroidScr
 
 ### README.md
 - The README.md file is not a changelog. README.md describes the project.
-- Do not look in README.md for guidance on how to proceed with your task. Do look to the game to understand the user/developer understanding of the project.
+- Do not look in README.md for guidance on how to proceed with your task. Do look to the file to understand the user/developer understanding of the project and user expectations from your efforts.
 - Update README.md as required with new information about the existence of new features and how to use them.
 
 ### Git
-- When creating a new branch always use a meaningful branch name that describes the task - don't use any text like "suggested-change" as part of the branch name or pull request text.
+- When creating a new branch always use a meaningful branch name that describes the task. Don't use any text like "suggested-change" as part of the branch name or pull request text.
+- Use short and meaningful text for commit messages, not (for example) hyphen-delimited-task-identifiers.
 
 ### Development Workspace/Environment Tips
 - If a network connection fails, report the exact URL clearly in your task summary.
