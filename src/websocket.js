@@ -26,7 +26,11 @@ module.exports = function (onStart = _onOpen, onStop = _onClose) {
 
     return {
         start: () => startWebSocket(true),
-        stop: () => webSocket?.close(),
+        // DroidScript's server responds to a normal close with status code 1005, which
+        // is invalid per the WebSocket spec and causes `ws` to emit a RangeError.
+        // Terminate the socket instead of performing the closing handshake to avoid
+        // triggering that error on manual disconnects.
+        stop: () => webSocket?.terminate(),
         playApp,
         stopApp
     }
