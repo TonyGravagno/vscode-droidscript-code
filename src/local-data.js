@@ -9,8 +9,10 @@ const CONSTANTS = require("./CONSTANTS");
 const data = {
     VERSION: CONSTANTS.VERSION,
     serverIP: '',
+    serverIPs: [],
     reload: '',
     PORT: CONSTANTS.PORT,
+    PORTs: [],
     localProjects: [],
     info: {}
 };
@@ -42,10 +44,19 @@ function save(CONFIG = data) {
 function adjust(config) {
     if (!config.localProjects) config.localProjects = [];
     if (!config.info) config.info = {};
+    if (!config.serverIPs) config.serverIPs = [];
+    if (!config.PORTs) config.PORTs = [];
 
-    // normalize serverIP
-    config.serverIP = data.serverIP.replace(/(https?:\/\/)?([^:]+)(:(\d+))?/,
-        (_, r = "http://", u = "", _p, p = data.PORT) => r + u + (data.PORT = p, _p));
+    // normalize serverIP and seed recent lists
+    if (config.serverIP) {
+        config.serverIP = config.serverIP.replace(/(https?:\/\/)?([^:]+)(:(\d+))?/,
+            (_, r = "http://", host = "", _p, p = config.PORT) => {
+                config.PORT = p;
+                if (!config.serverIPs.includes(host)) config.serverIPs.unshift(host);
+                if (!config.PORTs.includes(p)) config.PORTs.unshift(p);
+                return `${r}${host}:${p}`;
+            });
+    }
 
     config.localProjects = config.localProjects.filter(m => m?.path && fs.existsSync(m.path));
     for (const p of config.localProjects) p.path = path.resolve(p.path);

@@ -2,6 +2,9 @@
 
 Notable releases.
 
+### Version 0.3.6 (Unreleased)
+- remember successful connections and automatically cycle through stored IP:Port pairs on reconnect
+
 ### Version 0.3.5 Alpha (2025-09-03)
 This is an unofficial alpha - use at your own risk. Get backups!  
 See notes and track updates [here](./v0.3.5.md).
