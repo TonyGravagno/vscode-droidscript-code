@@ -65,8 +65,12 @@ declare type DSCONFIG_T = {
     VERSION: number;
     // The IP address of the DroidScript server
     serverIP: string;
+    // Recent server IPs in most-recent-first order
+    serverIPs: string[];
     // The port number
     PORT: string;
+    // Recent ports in most-recent-first order
+    PORTs: string[];
     // Password used by DroidScript CLI
     password?: string;
     // reload project

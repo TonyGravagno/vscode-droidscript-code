@@ -27,6 +27,7 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 - Open DroidScript app on your phone and press the WiFi icon to start the DS WiFi IDE server. You should be able to see the IP Address on the popup message.
 - Click the **"Connect"** button in the Projects view or in the Samples view. You can also click the **"Connect to DroidScript"** button in the bottom right corner.
 - A popup will be displayed where to enter **"IP Address"** and **"Password"** if necessary.
+- The extension remembers successful connections and will automatically try them on reconnect before prompting again.
 
 ## How to open an app?
 
