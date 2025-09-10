@@ -1,26 +1,23 @@
 # Project Notes
 
 ## Extension activation and installation
-- Activation occurs when workspace contains `.dsproj` file (package.json activationEvents).
-- `activate()` in extension.js registers commands and providers, initializes tree views, extracts assets to `~/.droidscript` if missing or version changed, and sets up status bar.
-- Assets include definitions and samples copied from extension definitions folder to `~/.droidscript/definitions`.
+- Activation occurs when a workspace contains a `.dsproj` marker file as declared in `package.json` activation events.
+- `activate()` registers all command handlers and language providers, creates the Projects, Docs, and Samples tree views, and wires file‑system watchers for saves, deletes, creates, and renames.
+- On first run or version change, `extractAssets()` removes any existing `~/.droidscript` folder before recreating `samples` and `definitions` subdirectories from bundled assets.
 
 ## Connection flow
-- Command `droidscript-code.connect` triggers `connect-to-droidscript.js`.
-- If not connected, prompts for server IP and optional password.
-- On successful server info retrieval and login, calls callback (debug server start).
-- `src/websocket.js` handles WebSocket to remote device; sets `CONNECTED` flag, logs, keepalive, and triggers callbacks on open/close.
+- Command `droidscript-code.connect` invokes `connect-to-droidscript.js` which prompts for the device IP, retrieves server info, and optionally requests a password.
+- Connection failures display an error with `Retry` or `Re-enter IP Address` options; success stores server details and starts the WebSocket debug server.
+- `websocket.js` opens the WebSocket, marks `CONNECTED` true, logs activity, starts a keep‑alive timer, and on close clears the timer, marks `CONNECTED` false, and calls the stop callback.
+- On connection start, `downloadDefinitions()` fetches `.d.ts` files from the device into `~/.droidscript/definitions/ts` for offline use.
 
 ## Project sync and workspace
-- `openProject()` and `openProjectFolder()` manage opening remote projects locally.
-- On new project, prompts for local folder, records project in dsconfig, downloads all files (`loadFiles('dnlAll')`), and adds folder to workspace.
-- `.dsproj` file created to mark DS project; status bar items displayed.
-- `loadFiles()` obtains remote file list via `indexFolder()` and `ext.listFolder`, then downloads or uploads using `writeFile()`/`uploadFile()`.
-- Config uses `jsconfig.json` for path exclusion; `excludeFile()` uses glob patterns from `jsconfig` or defaults.
+- `openProject()` looks up an existing local copy; if none, it prompts for a destination folder and records the project in `dsconfig.json`.
+- `openProjectFolder()` adds the folder to the workspace, ensures a `.dsproj` marker exists, opens the main source file, and optionally downloads files from the device.
+- `loadFiles()` uses `indexFolder()` to list remote and local files, then mirrors content: `createFolder()` makes directories, `writeFile()` saves downloaded data, and `uploadFile()` sends local changes.
 
 ## File watchers and sync
-- onDidSaveTextDocument, onCreateFile, onDeleteFile, onRenameFile propagate changes to remote via dsclient functions.
-- Uses `batchPromises` for concurrency.
+- `onDidSaveTextDocument`, `onCreateFile`, `onDeleteFile`, and `onRenameFile` queue changed paths and push updates to the device when connected, using `batchPromises` to control concurrency.
 
 ## Providers and Intellisense
 - `completionItemProvider`, `hoverProvider`, `signatureHelpProvider`, `codeActionProvider` registered for JavaScript.
@@ -28,17 +25,25 @@
 - Hover provider parses word and scope to provide Markdown documentation.
 
 ## Commands and keybindings
-- package.json declares commands (runApp, stop, create app, exec, refresh, etc.) and keybindings (`alt+r` run, `alt+s` stop).
-- Additional commands available for rename, reveal in explorer, connect/disconnect, etc.
+- `package.json` exposes run, stop, project management, and utility commands; default keybindings map `alt+r` to run and `alt+s` to stop.
+- Any command ID listed in `package.json` can be assigned a custom shortcut through VS Code’s Keyboard Shortcuts settings.
 
 ## Device UI and assets
-- `extractAssets()` clears and recreates `~/.droidscript` subfolders (samples, definitions) and copies bundled definitions.
-- On connection start, `downloadDefinitions()` fetches definitions from device into `.droidscript/definitions/ts`.
+- `extractAssets()` clears and recreates `~/.droidscript` subfolders (`samples` and `definitions`) from extension resources.
+- `downloadDefinitions()` retrieves `.d.ts` files from the device into `~/.droidscript/definitions/ts` so documentation and UI metadata are cached locally.
 
 ## Disconnect behavior
-- WebSocket `wsOnClose` sets CONNECTED false, clears keepalive, triggers `onDebugServerStop()` which hides status bar, resets project name, refreshes tree views, and prompts to reconnect.
+- `wsOnClose` marks `CONNECTED` false, stops the keep‑alive timer, and triggers `onDebugServerStop()` to hide status bar items, clear the current project, refresh tree views, and prompt for reconnection.
 
 ## Mouse-over help
-- Hover provider uses `scopesJson` to look up methods; `provideHover` constructs Markdown with signature and documentation.
-- Completion and signature providers similarly use `scopesJson` for suggestions and signatures.
+- The hover provider resolves the word and scope under the cursor, looks up matching entries in `scopesJson`, and returns Markdown with the signature and description.
+- Completion and signature providers parse the surrounding text to feed matching data from `scopesJson` into VS Code APIs.
+
+## Configuration files
+- `dsconfig.json` in the user’s home directory stores server IP, known local projects, and per‑version metadata.
+- Each project may provide a `jsconfig.json` whose `exclude` globs guide sync operations; a default configuration is bundled for projects lacking one.
+
+## Possible Problems
+- `extractAssets()` deletes the entire `~/.droidscript` folder before copying assets, which may remove user customizations.
+- Directory creation on the device is not implemented in `onCreateFile()`, so new local folders are not mirrored remotely.
 
