@@ -29,4 +29,4 @@ This repository contains a VSCode extension for remote development with DroidScr
 ### When debugging an issue, diagnosing a problem, proposing a fix
 - Refer to lines of code rather than reproducing code blocks.
 
-Do not run a test script; there are no valid tests in this package.
+Do not run a test script or attempt to lint; there are no valid tests in this package.
