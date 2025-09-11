@@ -39,22 +39,33 @@ module.exports = async function (callback, status) {
 
 // display a popup dialog to enter ip address
 async function showIpPopup() {
-    const options = {
-        placeHolder: 'Enter IP Address: 192.168.254.112:8088',
-        ignoreFocusOut: true
-    };
-    const value = await vscode.window.showInputBox(options);
-    if (!value) {
-        if (value !== undefined) await showIpPopup();
-        return;
-    }
-    const [host, port = DSCONFIG.PORT] = value.trim().split(':');
-    const endpoint = `${host}:${port}`;
-    DSCONFIG.serverIPs = DSCONFIG.serverIPs.filter(h => h !== endpoint);
-    DSCONFIG.serverIPs.unshift(endpoint);
-    localData.save(DSCONFIG);
-    STATUS && STATUS(`Trying ${endpoint}`);
-    await tryEndpoints();
+    const quickPick = vscode.window.createQuickPick();
+    quickPick.placeholder = 'Enter IP Address: 192.168.254.112:8088';
+    quickPick.ignoreFocusOut = true;
+    quickPick.items = DSCONFIG.serverIPs.map(ip => ({ label: ip }));
+    return new Promise(resolve => {
+        quickPick.onDidAccept(async () => {
+            const value = quickPick.selectedItems[0]?.label || quickPick.value;
+            quickPick.hide();
+            if (!value) { resolve(showIpPopup()); return; }
+            const input = value.trim().replace(/^https?:\/\//, '');
+            const [host, portPart] = input.split(':');
+            const port = portPart || DSCONFIG.PORT || '8088';
+            const endpoint = `${host}:${port}`;
+            DSCONFIG.serverIPs = DSCONFIG.serverIPs.filter(h => h !== endpoint);
+            DSCONFIG.serverIPs.unshift(endpoint);
+            DSCONFIG.serverIPs = DSCONFIG.serverIPs.slice(0, 10);
+            localData.save(DSCONFIG);
+            STATUS && STATUS(`Trying ${endpoint}`);
+            await tryEndpoints();
+            resolve();
+        });
+        quickPick.onDidHide(() => {
+            quickPick.dispose();
+            resolve();
+        });
+        quickPick.show();
+    });
 }
 // iterate through stored endpoints until one connects
 async function tryEndpoints() {
@@ -105,6 +116,7 @@ async function connectWith(host, port, showError) {
     const endpoint = `${host}:${port}`;
     DSCONFIG.serverIPs = DSCONFIG.serverIPs.filter(h => h !== endpoint);
     DSCONFIG.serverIPs.unshift(endpoint);
+    DSCONFIG.serverIPs = DSCONFIG.serverIPs.slice(0, 10);
 
     localData.save(DSCONFIG);
     STATUS && STATUS();

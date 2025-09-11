@@ -6,7 +6,8 @@
 - On first run or version change, `extractAssets()` removes any existing `~/.droidscript` folder before recreating `samples` and `definitions` subdirectories from bundled assets.
 
 ## Connection flow
-- Command `droidscript-code.connect` invokes `connect-to-droidscript.js` which cycles through IP:port endpoints in `serverIPs` from `dsconfig.json`, updating the status bar for each attempt and only prompting for a new address when all stored entries fail.
+- Command `droidscript-code.connect` invokes `connect-to-droidscript.js` which cycles through IP:port endpoints in `serverIPs` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt and only prompting for a new address when all stored entries fail.
+- The IP prompt is an editable quick pick listing the stored endpoints; entering an address without a port defaults to `:8088` or the last used port.
 - Connection failures display an error with `Retry` or `Re-enter IP Address` options; success stores server details, moves the working endpoint to the front of the history, and starts the WebSocket debug server.
 - `websocket.js` opens the WebSocket, marks `CONNECTED` true, logs activity, starts a keep‑alive timer, and on close clears the timer, marks `CONNECTED` false, and calls the stop callback.
 - On connection start, `downloadDefinitions()` fetches `.d.ts` files from the device into `~/.droidscript/definitions/ts` for offline use.
@@ -41,7 +42,7 @@
 - Completion and signature providers parse the surrounding text to feed matching data from `scopesJson` into VS Code APIs.
 
 ## Configuration files
-- `dsconfig.json` in the user's home directory stores server endpoint history (`serverIPs`), known local projects, and per‑version metadata.
+- `dsconfig.json` in the user's home directory stores server endpoint history (`serverIPs`, capped at 10), known local projects, and per‑version metadata.
 - Each project may provide a `jsconfig.json` whose `exclude` globs guide sync operations; a default configuration is bundled for projects lacking one.
 
 ## Possible Problems
