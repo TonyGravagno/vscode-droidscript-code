@@ -102,14 +102,14 @@ async function connectWith(host, port, showError) {
     let info = await ext.getServerInfo(`http://${host}:${port}`);
     if (!info || info.status !== "ok") {
         if (showError) {
-            const selection = await vscode.window.showErrorMessage(
-                "Make sure the DS App is running and IP Address is correct.",
-                "Retry"
+            // Display guidance without offering automatic retry; the quickpick will be shown instead.
+            await vscode.window.showErrorMessage(
+                "Make sure the DS App is running and IP:Port endpoint is correct.\n" +
+                "Select endpoint from above or enter a new endpoint."
+                // , "Retry" // Retry removed; user selects endpoint instead
             );
-            if (selection === "Retry") {
-                STATUS && STATUS(`Trying ${host}:${port}`);
-                return connectWith(host, port, true);
-            }
+            // Open the Select Device QuickPick so the user can choose or enter a new endpoint.
+            await vscode.commands.executeCommand("droidscript-code.selectDevice");
         }
         STATUS && STATUS();
         return false;
