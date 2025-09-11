@@ -104,7 +104,7 @@ async function connectWith(host, port, showError) {
 
 // Notify the user and open the Select Device picker.
 async function showConnectionFailed() {
-    await vscode.window.showErrorMessage(CONNECTION_FAILED_MSG);
+    void vscode.window.showErrorMessage(CONNECTION_FAILED_MSG);
     await vscode.commands.executeCommand("droidscript-code.selectDevice");
 }
 
