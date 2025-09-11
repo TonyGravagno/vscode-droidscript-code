@@ -34,7 +34,7 @@
 - `downloadDefinitions()` retrieves `.d.ts` files from the device into `~/.droidscript/definitions/ts` so documentation and UI metadata are cached locally.
 
 ## Disconnect behavior
-- `wsOnClose` marks `CONNECTED` false, stops the keep‑alive timer, and triggers `onDebugServerStop()` to hide status bar items, clear the current project, refresh tree views, and prompt for reconnection.
+  - `wsOnClose` marks `CONNECTED` false, stops the keep‑alive timer, and triggers `onDebugServerStop()` to hide status bar items, clear the current project, refresh tree views, and either cycle through saved endpoints or show a reconnect prompt based on the `droidscript-code.autoReconnect` setting.
 - Manual disconnects call `terminate()` instead of a normal WebSocket close because the DroidScript server sends an invalid status code (1005) during the closing handshake, which otherwise triggers a `RangeError` in the `ws` library.
 
 ## Mouse-over help

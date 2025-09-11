@@ -18,6 +18,16 @@
   ],
   "main": "./extension.js",
   "contributes": {
+    "configuration": {
+      "title": "DroidScript",
+      "properties": {
+        "droidscript-code.autoReconnect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically reconnect after an unexpected disconnect."
+        }
+      }
+    },
     "keybindings": [
       {
         "command": "droidscript-code.runApp",

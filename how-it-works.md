@@ -12,7 +12,7 @@
 - When the connection comes up, `downloadDefinitions()` copies `.d.ts` files from the device into `~/.droidscript/definitions/ts` so UI metadata is cached locally【F:extension.js†L777-L795】.
 
 ## Disconnect behavior
-- When the WebSocket closes, `onDebugServerStop()` hides status‑bar items, clears the current project name, refreshes tree views, and prompts the user to reconnect【F:extension.js†L832-L840】.
+  - When the WebSocket closes, `onDebugServerStop()` hides status‑bar items, clears the current project name, refreshes tree views, and either automatically reconnects or prompts the user based on `droidscript-code.autoReconnect`【F:extension.js†L861-L875】.
 - Manual disconnects call `terminate()` rather than a normal WebSocket close because the DroidScript server replies with the reserved status code `1005`, which `ws` treats as a `RangeError`.
 
 ## Opening a device project locally

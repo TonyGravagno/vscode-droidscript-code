@@ -29,7 +29,9 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 - A dropdown appears where you can pick or type an **"IP Address"**.
  - Up to 10 recent IP:port endpoints are remembered and cycled through before prompting again. While cycling, the status bar shows `Trying host:port`; click this text to stop and open the dropdown immediately.
  - If you omit the `:port`, the extension assumes `:8088` or the last used port. Selecting or typing an address attempts only that endpoint and returns to the dropdown if it fails.
- - A **"Password"** prompt follows when required.
+- A **"Password"** prompt follows when required.
+- By default the extension automatically retries connection attempts when the server disconnects unexpectedly. This behaviour
+  can be disabled by setting `"droidscript-code.autoReconnect": false` in your VS Code settings.
 
 ## How to open an app?
 
