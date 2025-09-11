@@ -25,6 +25,11 @@
           "type": "boolean",
           "default": true,
           "description": "Automatically reconnect after an unexpected disconnect."
+        },
+        "droidscript-code.connectionTimeout": {
+          "type": "integer",
+          "default": 3000,
+          "description": "Milliseconds allowed for initial connection before timeout/failure."
         }
       }
     },

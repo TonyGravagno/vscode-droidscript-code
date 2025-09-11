@@ -10,7 +10,7 @@
 
 - Command `droidscript-code.connect` launches `connect-to-droidscript.js`, which cycles through IP:port endpoints in `serverIPs[]` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt. Clicking the status bar's `Trying` message cancels the loop and immediately invokes **DroidScript: Select Device**. If all endpoints fail, an error message appears and the picker opens. The picker lists past endpoints and accepts new entries without a port, defaulting to `:8088` or the current `PORT`; selecting an entry updates the default endpoint without connecting【F:src/commands/connect-to-droidscript.js†L50-L82】【F:src/commands/connect-to-droidscript.js†L99-L119】.
 - Successful connections move the working endpoint to the head of `serverIPs[]` and save it alongside `serverIP` and `PORT`【F:src/commands/connect-to-droidscript.js†L104-L108】.
-- `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer; on close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js†L19-L89】【F:src/websocket.js†L102-L111】.
+- `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer; on close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js†L19-L89】【F:src/websocket.js†L102-L111】. The setting `droidscript-code.connectionTimeout` is passed to the websocket constructor, and determines many milliseconds to wait before giving up a failed connection.
 - When the connection comes up, `downloadDefinitions()` copies `.d.ts` files from the device into `~/.droidscript/definitions/ts` so UI metadata is cached locally【F:extension.js†L777-L795】.
 
 ## Disconnect behavior
