@@ -47,6 +47,10 @@ let samplesTreeDataProvider;
 /** @type {ReturnType<debugServer>} */
 let dbgServ;
 
+// Flag to track user-initiated disconnects so auto-reconnect only triggers on
+// unexpected drops.
+let manualDisconnect = false;
+
 /** @type {vscode.StatusBarItem?} */
 let syncButton;
 /** @type {vscode.StatusBarItem?} */
@@ -75,7 +79,10 @@ async function activate(context) {
     }
     subscribe("connect", () => connectToDroidScript(dbgServ.start, setConnectionMessage));
     subscribe("cancelConnect", connectToDroidScript.cancel);
-    subscribe("disconnect", dbgServ.stop);
+    subscribe("disconnect", () => {
+        manualDisconnect = true;
+        dbgServ.stop();
+    });
     subscribe("loadFiles", loadFiles);
     subscribe("extractAssets", extractAssets);
     subscribe("stopApp", stop);
@@ -168,6 +175,7 @@ async function activate(context) {
 
 // This method is called when extension is deactivated
 function deactivate() {
+    manualDisconnect = true;
     dbgServ.stop();
     vscode.commands.executeCommand('livePreview.end');
 }
@@ -673,6 +681,8 @@ async function deleteAppDialog(item) {
     projectsTreeDataProvider.refresh();
 
     if (appName == PROJECT) {
+        // Deleting the active project severs the current session.
+        manualDisconnect = true;
         dbgServ.stop();
         setProjectName();
     }
@@ -854,8 +864,15 @@ async function onDebugServerStop() {
     // pluginsTreeDataProvider.refresh();
     samplesTreeDataProvider.refresh();
     projectsTreeDataProvider.refresh();
-    const selection = await vscode.window.showWarningMessage("DroidScript disconnected.", "Reconnect");
-    if (selection === "Reconnect") vscode.commands.executeCommand("droidscript-code.connect");
+    const autoReconnect = vscode.workspace.getConfiguration('droidscript-code').get('autoReconnect', true);
+    if (!manualDisconnect && autoReconnect) {
+        // Mirror the manual Reconnect path by cycling through known endpoints.
+        vscode.commands.executeCommand("droidscript-code.connect");
+    } else if (!manualDisconnect) {
+        const selection = await vscode.window.showWarningMessage("DroidScript disconnected.", "Reconnect");
+        if (selection === "Reconnect") vscode.commands.executeCommand("droidscript-code.connect");
+    }
+    manualDisconnect = false;
 }
 
 // documentations
