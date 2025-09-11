@@ -52,11 +52,11 @@ async function getServerInfo() {
         let info = await ext.getServerInfo();
         if (!info || info.status !== "ok") {
             prog.report({ message: "Failed" });
-            vscode.window.showErrorMessage("Make sure the DS App is running and IP Address is correct.", "Retry", "Re-enter IP Address")
-                .then(res => {
-                    if (res === "Retry") getServerInfo();
-                    else if (res === "Re-enter IP Address") showIpPopup();
-                });
+            await vscode.window.showErrorMessage(
+                "Make sure the DS App is running and IP:Port endpoint is correct. Select endpoint from above or enter a new endpoint."
+                // , "Retry", "Re-enter IP Address"
+            );
+            vscode.commands.executeCommand("droidscript-code.selectDevice");
             return;
         }
 
