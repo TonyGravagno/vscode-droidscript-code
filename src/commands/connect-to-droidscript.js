@@ -11,6 +11,8 @@ let DSCONFIG;
 let CALLBACK;
 /** @type {(msg?: string) => void} */
 let STATUS;
+/** Flag to abort endpoint attempts */
+let cancelTry = false;
 
 /** @param {() => void} callback @param {(msg?: string) => void} status */
 module.exports = async function (callback, status) {
@@ -37,6 +39,11 @@ module.exports = async function (callback, status) {
     }
 }
 
+// expose cancel function so the status bar can interrupt connection attempts
+module.exports.cancel = () => {
+    cancelTry = true;
+};
+
 // display a popup dialog to enter ip address
 async function showIpPopup() {
     const quickPick = vscode.window.createQuickPick();
@@ -57,7 +64,8 @@ async function showIpPopup() {
             DSCONFIG.serverIPs = DSCONFIG.serverIPs.slice(0, 10);
             localData.save(DSCONFIG);
             STATUS && STATUS(`Trying ${endpoint}`);
-            await tryEndpoints();
+            const connected = await connectWith(host, port, true);
+            if (!connected) await showIpPopup();
             resolve();
         });
         quickPick.onDidHide(() => {
@@ -71,11 +79,18 @@ async function showIpPopup() {
 async function tryEndpoints() {
     const endpoints = DSCONFIG.serverIPs;
     for (let i = 0; i < endpoints.length; i++) {
+        if (cancelTry) {
+            cancelTry = false;
+            STATUS && STATUS();
+            await showIpPopup();
+            return;
+        }
         const [host, port = DSCONFIG.PORT] = endpoints[i].split(':');
         STATUS && STATUS(`Trying ${host}:${port}`);
         const connected = await connectWith(host, port, false);
         if (connected) return;
     }
+    cancelTry = false;
     STATUS && STATUS();
     await showIpPopup();
 }
@@ -89,14 +104,11 @@ async function connectWith(host, port, showError) {
         if (showError) {
             const selection = await vscode.window.showErrorMessage(
                 "Make sure the DS App is running and IP Address is correct.",
-                "Retry",
-                "Re-enter IP Address"
+                "Retry"
             );
             if (selection === "Retry") {
                 STATUS && STATUS(`Trying ${host}:${port}`);
                 return connectWith(host, port, true);
-            } else if (selection === "Re-enter IP Address") {
-                showIpPopup();
             }
         }
         STATUS && STATUS();

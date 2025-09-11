@@ -6,9 +6,9 @@
 - On first run or version change, `extractAssets()` removes any existing `~/.droidscript` folder before recreating `samples` and `definitions` subdirectories from bundled assets.
 
 ## Connection flow
-- Command `droidscript-code.connect` invokes `connect-to-droidscript.js` which cycles through IP:port endpoints in `serverIPs` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt and only prompting for a new address when all stored entries fail.
-- The IP prompt is an editable quick pick listing the stored endpoints; entering an address without a port defaults to `:8088` or the last used port.
-- Connection failures display an error with `Retry` or `Re-enter IP Address` options; success stores server details, moves the working endpoint to the front of the history, and starts the WebSocket debug server.
+- Command `droidscript-code.connect` invokes `connect-to-droidscript.js` which cycles through IP:port endpoints in `serverIPs` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt. Clicking the `Trying` message stops the loop and opens the endpoint picker immediately.
+- The IP prompt is an editable quick pick listing the stored endpoints; entering an address without a port defaults to `:8088` or the last used port. Selecting or typing an address attempts only that endpoint and reopens the picker on failure instead of cycling through the list.
+- Connection failures show an error with a `Retry` option; success stores server details, moves the working endpoint to the front of the history, and starts the WebSocket debug server.
 - `websocket.js` opens the WebSocket, marks `CONNECTED` true, logs activity, starts a keep‑alive timer, and on close clears the timer, marks `CONNECTED` false, and calls the stop callback.
 - On connection start, `downloadDefinitions()` fetches `.d.ts` files from the device into `~/.droidscript/definitions/ts` for offline use.
 
