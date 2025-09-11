@@ -63,14 +63,12 @@ type DsInfo = {
 declare type DSCONFIG_T = {
     // The version of the Extension
     VERSION: number;
-    // The IP address of the DroidScript server
+    // The URL of the DroidScript server
     serverIP: string;
-    // Recent server IPs in most-recent-first order
+    // Recent IP:port endpoints in most-recent-first order
     serverIPs: string[];
     // The port number
     PORT: string;
-    // Recent ports in most-recent-first order
-    PORTs: string[];
     // Password used by DroidScript CLI
     password?: string;
     // reload project
