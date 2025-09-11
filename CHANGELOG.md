@@ -14,7 +14,7 @@ Notable releases.
 - Removed debug line causing error log and stray number output in log.
 - Added `DroidScript: Select Device` command to choose stored IP:port endpoints.
 - Adjusted the connection-failure handler to display guidance about IP:Port endpoints, removed the Retry button, and launch the Select Device QuickPick for endpoint selection.
-- Connection failures now show "Connection failed" guidance, reset the status bar to "Connect to DroidScript", and open the Select Device picker after all stored endpoints fail.
+
 
 ### Version 0.3.5 Alpha (2025-09-03)
 This is an unofficial alpha - use at your own risk. Get backups!  
