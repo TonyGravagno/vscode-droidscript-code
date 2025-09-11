@@ -45,7 +45,13 @@ const catchError = (error) => {
 /** @type {(IP?: string) => Promise<DSServerResponse<DSCONFIG_T>>} */
 async function getServerInfo(IP = "") {
   const url = `${IP || DSCONFIG.serverIP}/ide?cmd=getinfo`;
-  let response = await axios.get(url, { timeout: 2000 }).catch(catchError);
+  let response = await axios.get(url, { timeout: 2000 }).catch((error) => {
+    if (error?.message && String(error.message).startsWith("timeout")) {
+      console.error(`${url} : ${error.message}`);
+      return { status: undefined, data: { status: "bad", error } };
+    }
+    return catchError(error);
+  });
   return response.data;
 }
 

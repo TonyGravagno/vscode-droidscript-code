@@ -13,6 +13,7 @@ Notable releases.
   - Status bar shows "Trying IP:Port" to indicate which device it's trying to reach.
   - Clicking the "Trying…" message interrupts endpoint cycling and opens the endpoint picker.
 - Adjusted the connection-failure handler to display guidance about IP:Port endpoints, removed the Retry button, and launch the Select Device QuickPick for endpoint selection. Only first entrypoint will be retried on new selection.
+- Timeout on initial connection now shows relevant message in debug console rather than stack trace.
 - Removed debug line causing error log and stray number output in log.
 - Fixed error from invalid WS status code 1005 from DS on disconnect.
 - Fixed error with return value of Login from retry.
