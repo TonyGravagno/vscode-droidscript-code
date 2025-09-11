@@ -33,10 +33,30 @@
 ## Configuration data
 
 - `.dsproj` — JSON marker file in each project folder. `openProjectFolder()` writes an empty `{}` file when a project is added so the `workspaceContains:.dsproj` activation event fires. The file isn't modified afterwards; deleting it prevents activation. Developers extending this file should update read/write logic to tolerate missing fields and keep the extension's activation event unchanged【F:extension.js】【F:package.json】.
-- `dsconfig.json` — stored in the user's home directory. `src/local-data.js` defines its schema with keys such as `VERSION`, `serverIP`, `serverIPs[]`, `PORT`, `localProjects[]`, and `info{}`; `serverIPs[]` holds up to 10 full `ip:port` endpoints and each `localProjects` item records `path`, `PROJECT`, `reload`, and `created` timestamps. The file is created on first run and saved whenever projects or settings change. During activation, if `VERSION` is older than the current extension, `activate()` calls `extractAssets()`, updates the version number, and writes the file back【F:src/local-data.js】【F:src/types.d.ts】【F:extension.js】. To add new fields, update the default object and `adjust()` in `src/local-data.js`, expand `DSCONFIG_T` in `src/types.d.ts`, and bump the extension version so old configs are migrated or rewritten.
-- `~/.droidscript` — asset cache under the home directory. `extractAssets()` removes the folder and recreates `samples` and `definitions` subdirectories, while `downloadDefinitions()` populates `definitions/ts` with `.d.ts` files from the device【F:extension.js】【F:src/CONSTANTS.js】. The folder is rebuilt when missing or when the extension version increases.
-- `jsconfig.json` — optional per‑project file controlling TypeScript checks and file‑sync exclusions. `addTypes` writes a default configuration if one is missing, `loadConfig()` reads it, and `excludeFile()` applies its `exclude` globs during sync; absent files fall back to a bundled default, and workspace-level configs do not cascade to projects【F:extension.js】【F:src/util.js】.
-- `package.json` — extension manifest located at the workspace root. It defines activation events, commands, and keybindings, and is not read from individual project folders; project-level `package.json` files are ignored, so settings do not cascade from workspace to project【F:package.json】.
+- `dsconfig.json` — stored in the `.droidscript` folder under the user's home directory.
+  - `src/local-data.js` defines its schema with keys such as `VERSION`, `serverIP`, `serverIPs[]`, `PORT`, `localProjects[]`, and `info{}`. `serverIPs[]` holds up to 10 full `ip:port` device endpoints. Each `localProjects` item (not limited to 10) records `path`, `PROJECT`, `reload`, and `created` timestamps.
+  - The file is created on first run and saved whenever projects or settings change. The file was previously directly in the user's home folder. As of v0.3.6 it's transparently migrated by local-data.js migrateConfigFile().
+  - During activation, if `VERSION` is older than the current extension, `activate()` calls `extractAssets()`, updates the version number, and writes the file back【F:src/local-data.js】【F:src/types.d.ts】【F:extension.js】.
+  - To add new fields:
+    - update the default object and `adjust()` in `src/local-data.js`,
+    - expand `DSCONFIG_T` in `src/types.d.ts`,
+    - bump the extension version so old configs are migrated or rewritten.
+- `~/.droidscript` - folder under the home directory.
+  - Contains `dsconfig.json` configuration file.
+  - Contains an asset cache:
+  - `extractAssets()` removes the folder and recreates `samples` and `definitions` subdirectories,
+  - `downloadDefinitions()` populates `definitions/ts` with `.d.ts` files from the device【F:extension.js】【F:src/CONSTANTS.js】.
+  - The sub-folders are created when missing and rebuilt when the extension version increases.
+- `jsconfig.json` — optional per‑project file controlling TypeScript checks and file‑sync exclusions.
+  - `addTypes` writes a default configuration file if one is missing,
+  - `loadConfig()` reads it,
+  - `excludeFile()` applies its `exclude` globs during sync;
+  - In DS projects, config files cascade like CSS from least-specific to most-specific. In a multi-folder project, absent files fall back to a default at the workspace-level.
+    - (Need to look into this: ) Workspace-level configs do not cascade to projects【F:extension.js】【F:src/util.js】.
+- `package.json` - extension manifest located at the workspace root.
+  - It defines activation events, commands, and keybindings, and is not read from individual project folders.
+  - project-level `package.json` files are ignored,
+    - (Need to look into this: ) so settings do not cascade from workspace to project【F:package.json】.
 
 ## Providers and commands
 
@@ -77,10 +97,12 @@
 2. #### **`String.prototype.match()` given a _string_ instead of a `RegExp`**
 
    - Many calls do `text.match("...")` with backslashes, expecting a regex. With a string, `.match()` does a **literal substring search**, not a regex. Examples:
-
-     - `text.match(\`(var|let|const)\b\[^\n(]+\b\${name}\s\*\[=,;\n]\`)\`
-     - `lines[i].match(\`\b\${name}\s\*=\[^=]\`)\`
-     - `text.match(\`\${v}\s\*=\s\*((app|gfx|ui|mui)\\.(\w+)|(\[^=;()]+))\`)\`
+   <hr>
+   <noformat>
+     text.match(`(var|let|const)\\b[^\n(]+\\b${match[2]}\\s*[=,;\\n]`))
+     lines[i].match(`\\b${match[2]}\\s*=[^=]`);
+   </noformat>
+   <hr>
 
    - **Impact:** these checks are far more permissive or simply wrong; they can easily miss real declarations or mis-detect false ones.
    - **Fix:** always build `new RegExp(pattern, flags)` and **escape** interpolated identifiers.

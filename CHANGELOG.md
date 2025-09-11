@@ -4,6 +4,7 @@ Notable releases.
 
 ### Version 0.3.6 (Unreleased)
 
+- The ~/dsconfig.json file auto-migrates from the user's home folder to ~/.droidscript/dsconfig.json. There's nothing to do, it just moves and will always used from there.
 - Now remembers successful connections in dsconfig.json.
 - Replaced the IP:port plain input box with an editable (QuickPIck) dropdown that lists known endpoints, accepts new entries, assumes :8088 when no port is provided, and trims history beyond 10 items. (QuickPick prompt accepts free-form text, so malformed addresses may be entered and stored. Will look into it soon. For now, don't do that.)
 - Added `DroidScript: Select Device` command to choose stored IP:port endpoints.
