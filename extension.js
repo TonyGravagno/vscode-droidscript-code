@@ -74,6 +74,7 @@ async function activate(context) {
         context.subscriptions.push(vscode.commands.registerCommand("droidscript-code." + cmd, fnc));
     }
     subscribe("connect", () => connectToDroidScript(dbgServ.start, setConnectionMessage));
+    subscribe("cancelConnect", connectToDroidScript.cancel);
     subscribe("disconnect", dbgServ.stop);
     subscribe("loadFiles", loadFiles);
     subscribe("extractAssets", extractAssets);
@@ -554,9 +555,9 @@ function displayConnectionStatus() {
     if (!connectionStatusBarItem) {
         connectionStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
         connectionStatusBarItem.tooltip = "DroidScript Connection Status";
-        connectionStatusBarItem.command = "droidscript-code.connect"; // Replace with your command ID or leave it empty
     }
 
+    connectionStatusBarItem.command = "droidscript-code.connect";
     if (CONNECTED) connectionStatusBarItem.text = "$(radio-tower) Connected: " + DSCONFIG.serverIP; // Wi-Fi icon
     else connectionStatusBarItem.text = "$(circle-slash) Connect to Droidscript"; // Wi-Fi icon
     connectionStatusBarItem.show();
@@ -570,9 +571,9 @@ function setConnectionMessage(msg) {
     if (!connectionStatusBarItem) {
         connectionStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
         connectionStatusBarItem.tooltip = "DroidScript Connection Status";
-        connectionStatusBarItem.command = "droidscript-code.connect";
     }
     if (msg) {
+        connectionStatusBarItem.command = "droidscript-code.cancelConnect";
         connectionStatusBarItem.text = msg;
         connectionStatusBarItem.show();
     } else {
