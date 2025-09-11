@@ -3,6 +3,7 @@
 Notable releases.
 
 ### Version 0.3.6 (Unreleased)
+- Added `DroidScript: Select Device` command to choose stored IP:port endpoints.
 - Remember successful connections and automatically cycle through stored IP:Port pairs on reconnect
 - Fixed error from invalid WS status code 1005 from DS on disconnect.
 - Removed debug line causing error log and stray number output in log.

@@ -32,6 +32,8 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 - A **"Password"** prompt follows when required.
 - By default the extension automatically retries connection attempts when the server disconnects unexpectedly. This behaviour
   can be disabled by setting `"droidscript-code.autoReconnect": false` in your VS Code settings.
+- Use `DroidScript: Select Device` from the Command Palette to choose or enter an endpoint without connecting.
+
 
 ## How to open an app?
 
