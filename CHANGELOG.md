@@ -13,6 +13,7 @@ Notable releases.
 - Fixed error from invalid WS status code 1005 from DS on disconnect.
 - Removed debug line causing error log and stray number output in log.
 - Added `DroidScript: Select Device` command to choose stored IP:port endpoints.
+- Adjusted the connection-failure handler to display guidance about IP:Port endpoints, removed the Retry button, now launching the Select Device QuickPick for endpoint selection
 
 ### Version 0.3.5 Alpha (2025-09-03)
 This is an unofficial alpha - use at your own risk. Get backups!  
