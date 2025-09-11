@@ -65,7 +65,7 @@ declare type DSCONFIG_T = {
     VERSION: number;
     // The URL of the DroidScript server
     serverIP: string;
-    // Recent IP:port endpoints in most-recent-first order
+    // Recent IP:port endpoints in most-recent-first order (max 10 entries)
     serverIPs: string[];
     // The port number
     PORT: string;

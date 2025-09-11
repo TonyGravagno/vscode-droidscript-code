@@ -13,7 +13,7 @@ const data = {
     reload: '',
     PORT: CONSTANTS.PORT,
     localProjects: [],
-    info: {}
+    info: {},
 };
 
 function load() {
@@ -45,35 +45,44 @@ function adjust(config) {
     if (!config.info) config.info = {};
     if (!config.serverIPs) config.serverIPs = [];
 
+    config.serverIPs = config.serverIPs
+        .map(h => {
+            const [host, port] = h.replace(/^https?:\/\//, '').split(':');
+            return `${host}:${port || config.PORT || CONSTANTS.PORT}`;
+        })
+        .filter((h, i, a) => h && a.indexOf(h) === i);
+
     // normalize serverIP and seed recent list
     if (config.serverIP) {
         config.serverIP = config.serverIP.replace(/(https?:\/\/)?([^:]+)(:(\d+))?/,
             (_, r = "http://", host = "", _p, p = config.PORT) => {
                 config.PORT = p;
                 const endpoint = `${host}:${p}`;
-                if (!config.serverIPs.includes(endpoint)) config.serverIPs.unshift(endpoint);
+                config.serverIPs = [endpoint, ...config.serverIPs.filter(h => h !== endpoint)];
                 return `${r}${endpoint}`;
             });
     }
+
+    config.serverIPs = config.serverIPs.slice(0, 10);
 
     config.localProjects = config.localProjects.filter(m => m?.path && fs.existsSync(m.path));
     for (const p of config.localProjects) p.path = path.resolve(p.path);
     return config;
 }
 
-/** 
+/**
  * @param {Parameters<LocalProject[]['find']>[0]} filter
  * @param {DSCONFIG_T} CONFIG
  */
 const getProject = (filter, CONFIG = data) => CONFIG.localProjects.find(filter)
 
-/** 
+/**
  * @param {string} name
  * @param {DSCONFIG_T} CONFIG
  */
 const getProjectByName = (name, CONFIG = data) => CONFIG.localProjects.find(p => p.PROJECT == name)
 
-/** 
+/**
  * @param {string} file
  * @param {DSCONFIG_T} CONFIG
  */
