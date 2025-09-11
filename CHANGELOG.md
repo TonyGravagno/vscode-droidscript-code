@@ -5,6 +5,13 @@ Notable releases.
 ### Version 0.3.6 (Unreleased)
 - Added `DroidScript: Select Device` command to choose stored IP:port endpoints.
 - Remember successful connections and automatically cycle through stored IP:Port pairs on reconnect
+- Now remembers successful connections in dsconfig.json.
+- Replaced the IP:port plain input box with an editable (QuickPIck) dropdown that lists known endpoints, accepts new entries, assumes :8088 when no port is provided, and trims history beyond 10 items. (QuickPick prompt accepts free-form text, so malformed addresses may be entered and stored. Will look into it soon. For now, don't do that.)
+- Implemented automatic reconnection logic that cycles through stored endpoints.
+  - Controlled by new droidscript-code.autoReconnect setting, defaults to true.
+  - Auto-reconnection only occurs after unexpected drops.
+  - Status bar shows "Trying IP:Port" to indicate which device it's trying to reach.
+  - Clicking the "Trying…" message interrupts endpoint cycling and immediately opens the endpoint picker.
 - Fixed error from invalid WS status code 1005 from DS on disconnect.
 - Removed debug line causing error log and stray number output in log.
 
