@@ -1,31 +1,37 @@
 # How It Works
 
 ## Extension activation and assets
+
 - VS Code activates the extension when a workspace contains a `.dsproj` file, as declared in `package.json`【F:package.json†L16-L18】.
 - `activate()` wires command registrations, file‑system watchers, and the Projects, Docs, and Samples tree views before extracting bundled assets if the local cache is missing or outdated【F:extension.js†L64-L166】.
 - `extractAssets()` deletes any existing `~/.droidscript` folder then recreates `samples` and `definitions` from extension resources【F:extension.js†L152-L160】【F:extension.js†L174-L189】.
 
 ## Connecting to a device
-- Command `droidscript-code.connect` launches `connect-to-droidscript.js`, which cycles through IP:port endpoints in `serverIPs[]` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt. Clicking the status bar's `Trying` message cancels the loop and immediately invokes **DroidScript: Select Device**. If all endpoints fail, an error message appears before the picker opens. The picker lists past endpoints and accepts new entries without a port, defaulting to `:8088` or the current `PORT`; selecting an entry updates the default endpoint without connecting【F:src/commands/connect-to-droidscript.js†L50-L82】【F:src/commands/connect-to-droidscript.js†L99-L119】.
+
+- Command `droidscript-code.connect` launches `connect-to-droidscript.js`, which cycles through IP:port endpoints in `serverIPs[]` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt. Clicking the status bar's `Trying` message cancels the loop and immediately invokes **DroidScript: Select Device**. If all endpoints fail, an error message appears and the picker opens. The picker lists past endpoints and accepts new entries without a port, defaulting to `:8088` or the current `PORT`; selecting an entry updates the default endpoint without connecting【F:src/commands/connect-to-droidscript.js†L50-L82】【F:src/commands/connect-to-droidscript.js†L99-L119】.
 - Successful connections move the working endpoint to the head of `serverIPs[]` and save it alongside `serverIP` and `PORT`【F:src/commands/connect-to-droidscript.js†L104-L108】.
 - `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer; on close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js†L19-L89】【F:src/websocket.js†L102-L111】.
 - When the connection comes up, `downloadDefinitions()` copies `.d.ts` files from the device into `~/.droidscript/definitions/ts` so UI metadata is cached locally【F:extension.js†L777-L795】.
 
 ## Disconnect behavior
-  - When the WebSocket closes, `onDebugServerStop()` hides status‑bar items, clears the current project name, refreshes tree views, and either automatically reconnects or prompts the user based on `droidscript-code.autoReconnect`【F:extension.js†L861-L875】.
+
+- When the WebSocket closes, `onDebugServerStop()` hides status‑bar items, clears the current project name, refreshes tree views, and either automatically reconnects or prompts the user based on `droidscript-code.autoReconnect`【F:extension.js†L861-L875】.
 - Manual disconnects call `terminate()` rather than a normal WebSocket close because the DroidScript server replies with the reserved status code `1005`, which `ws` treats as a `RangeError`.
 
 ## Opening a device project locally
+
 - Selecting a project in the Projects view calls `openProject()`, which looks for an existing local copy or prompts for a target folder and records it in `dsconfig.json`【F:extension.js†L876-L930】.
 - `openProjectFolder()` adds the folder to the workspace with `updateWorkspaceFolders`, writes a `.dsproj` marker if absent, opens the main file, and optionally syncs content from the device【F:extension.js†L936-L979】.
 
 ## Pulling project files from the device
+
 - `loadFiles()` prompts for a sync action and calls `getAllFiles()` to download or upload project files【F:extension.js†L247-L282】.
 - `indexFolder()` walks remote and local directories, honoring `exclude` globs from `jsconfig.json` or defaults【F:extension.js†L289-L311】.
 - Downloads use `createFolder()` and `writeFile()` to mirror the device structure; uploads rely on `uploadFile()` to send local changes【F:extension.js†L318-L355】【F:extension.js†L369-L392】.
 - File‑system watchers (`onDidSaveTextDocument`, `onCreateFile`, `onDeleteFile`, `onRenameFile`) propagate edits back to the device when connected【F:extension.js†L110-L113】【F:extension.js†L416-L455】【F:extension.js†L464-L480】.
 
 ## Configuration data
+
 - `.dsproj` — JSON marker file in each project folder. `openProjectFolder()` writes an empty `{}` file when a project is added so the `workspaceContains:.dsproj` activation event fires. The file isn't modified afterwards; deleting it prevents activation. Developers extending this file should update read/write logic to tolerate missing fields and keep the extension's activation event unchanged【F:extension.js†L936-L965】【F:package.json†L16-L18】.
 - `dsconfig.json` — stored in the user's home directory. `src/local-data.js` defines its schema with keys such as `VERSION`, `serverIP`, `serverIPs[]`, `PORT`, `localProjects[]`, and `info{}`; `serverIPs[]` holds up to 10 full `ip:port` endpoints and each `localProjects` item records `path`, `PROJECT`, `reload`, and `created` timestamps. The file is created on first run and saved whenever projects or settings change. During activation, if `VERSION` is older than the current extension, `activate()` calls `extractAssets()`, updates the version number, and writes the file back【F:src/local-data.js†L8-L38】【F:src/types.d.ts†L20-L29】【F:src/types.d.ts†L62-L80】【F:extension.js†L152-L160】. To add new fields, update the default object and `adjust()` in `src/local-data.js`, expand `DSCONFIG_T` in `src/types.d.ts`, and bump the extension version so old configs are migrated or rewritten.
 - `~/.droidscript` — asset cache under the home directory. `extractAssets()` removes the folder and recreates `samples` and `definitions` subdirectories, while `downloadDefinitions()` populates `definitions/ts` with `.d.ts` files from the device【F:extension.js†L174-L185】【F:extension.js†L777-L795】【F:src/CONSTANTS.js†L7-L12】. The folder is rebuilt when missing or when the extension version increases.
@@ -33,14 +39,17 @@
 - `package.json` — extension manifest located at the workspace root. It defines activation events, commands, and keybindings, and is not read from individual project folders; project-level `package.json` files are ignored, so settings do not cascade from workspace to project【F:package.json†L16-L152】.
 
 ## Providers and commands
+
 - JavaScript language features are supplied by `completionItemProvider`, `hoverProvider`, `signatureHelpProvider`, and `codeActionProvider`【F:extension.js†L115-L126】.
 - Completion, hover text, and signatures are generated from JSON scope data in `completions/` using provider logic in `src/providers/`【F:src/providers/completionItemProvider.js†L1-L30】【F:src/providers/hoverProvider.js†L1-L33】【F:src/providers/signatureHelperProvider.js†L1-L55】.
 - Many editor and project management commands are registered in `activate()` and exposed via `package.json`'s `commands` contribution; any command ID can be bound to custom shortcuts via VS Code's Keyboard Shortcuts UI【F:extension.js†L73-L108】【F:package.json†L74-L152】.
 
 ## Keyboard shortcuts
+
 - Default keybindings map `Alt+R` to run the current project and `Alt+S` to stop it【F:package.json†L21-L31】. Any command listed in `package.json` can accept custom shortcuts through VS Code's Keyboard Shortcuts UI.
 
 ## Mouse‑over help
+
 - The hover provider extracts the word under the cursor, determines its scope, and looks up matching documentation. It then constructs a Markdown block with signature and description for display in the tooltip【F:src/providers/hoverProvider.js†L6-L28】.
 - Signature and completion providers follow similar parsing logic, feeding scope JSON data to VS Code's APIs to show parameter hints and autocompletion lists【F:src/providers/signatureHelperProvider.js†L11-L55】【F:src/providers/completionItemProvider.js†L6-L30】.
 
@@ -48,73 +57,75 @@
 
 ### What this file tries to do (functionality & intent)
 
-* **Intent:** automatically "declare the missing variables" in a JS file:
+- **Intent:** automatically "declare the missing variables" in a JS file:
 
   1. On lines that look like `name = ...;` (and not already declared anywhere), insert `var ` before the `name`.
   2. Build a **globals declaration block** (e.g., `/** @type {...} */\nvar foo;`) inserted near the top (before the first `function`), for names it infers are shared across functions.
   3. Provide **best-effort JSDoc types** for those globals, inferred from the first assignment: literals (`"x"`, `[`, `{`, numbers, `true/false`) and DSL-ish calls like `app.CreateX()` → `DsX`.
 
-* **Heuristic "global" detection:** splits text into "function bodies," collects LHS assignment names in each, and if a name is assigned in one block but merely referenced (word match) in another block, it's treated as a global and will get a top-of-file `var` declaration + JSDoc.
+- **Heuristic "global" detection:** splits text into "function bodies," collects LHS assignment names in each, and if a name is assigned in one block but merely referenced (word match) in another block, it's treated as a global and will get a top-of-file `var` declaration + JSDoc.
 
-* **Insertion point:** "before the first function (after optional comment/blank line prelude)." If it can't find a function, it inserts at the start of the file.
+- **Insertion point:** "before the first function (after optional comment/blank line prelude)." If it can't find a function, it inserts at the start of the file.
 
 ### Faults, correctness concerns, and reliability risks
 
 1. #### **Regex that won't work in JS engines (variable-length lookbehind)**
 
-   * Patterns like `(?<=^|\n|^\s*for\s*\()` and `(?<!(var|let|const)\s*)` use **lookbehinds with `\s*`** (variable length). In V8/Node/VS Code's JS engine, **lookbehind must be fixed length**. These patterns are likely to throw `Invalid regular expression: look-behind pattern matches variable length`.
-   * **Impact:** the edit pass may never run (exception thrown), or behavior differs by engine/version.
+   - Patterns like `(?<=^|\n|^\s*for\s*\()` and `(?<!(var|let|const)\s*)` use **lookbehinds with `\s*`** (variable length). In V8/Node/VS Code's JS engine, **lookbehind must be fixed length**. These patterns are likely to throw `Invalid regular expression: look-behind pattern matches variable length`.
+   - **Impact:** the edit pass may never run (exception thrown), or behavior differs by engine/version.
 
-2. #### **`String.prototype.match()` given a *string* instead of a `RegExp`**
+2. #### **`String.prototype.match()` given a _string_ instead of a `RegExp`**
 
-   * Many calls do `text.match("...")` with backslashes, expecting a regex. With a string, `.match()` does a **literal substring search**, not a regex. Examples:
+   - Many calls do `text.match("...")` with backslashes, expecting a regex. With a string, `.match()` does a **literal substring search**, not a regex. Examples:
 
-     * `text.match(\`(var|let|const)\b\[^\n(]+\b\${name}\s\*\[=,;\n]\`)\`
-     * `lines[i].match(\`\b\${name}\s\*=\[^=]\`)\`
-     * `text.match(\`\${v}\s\*=\s\*((app|gfx|ui|mui)\\.(\w+)|(\[^=;()]+))\`)\`
-   * **Impact:** these checks are far more permissive or simply wrong; they can easily miss real declarations or mis-detect false ones.
-   * **Fix:** always build `new RegExp(pattern, flags)` and **escape** interpolated identifiers.
+     - `text.match(\`(var|let|const)\b\[^\n(]+\b\${name}\s\*\[=,;\n]\`)\`
+     - `lines[i].match(\`\b\${name}\s\*=\[^=]\`)\`
+     - `text.match(\`\${v}\s\*=\s\*((app|gfx|ui|mui)\\.(\w+)|(\[^=;()]+))\`)\`
+
+   - **Impact:** these checks are far more permissive or simply wrong; they can easily miss real declarations or mis-detect false ones.
+   - **Fix:** always build `new RegExp(pattern, flags)` and **escape** interpolated identifiers.
 
 3. #### **Scope semantics: inserting `var`**
 
-   * `var` is **function-scoped** and hoisted; at top level in a script it becomes a global property; inside ESM it's module-scoped (not global). This tool does not distinguish those cases.
-   * Inserting `var` can **silence bugs** by creating globals you didn't intend, or **change temporal semantics** compared to `let/const` (TDZ vs hoist), causing subtle runtime differences.
+   - `var` is **function-scoped** and hoisted; at top level in a script it becomes a global property; inside ESM it's module-scoped (not global). This tool does not distinguish those cases.
+   - Inserting `var` can **silence bugs** by creating globals you didn't intend, or **change temporal semantics** compared to `let/const` (TDZ vs hoist), causing subtle runtime differences.
 
 4. #### **False positives/negatives**
 
-   * Regex cannot parse JS. Cases likely broken or skipped:
+   - Regex cannot parse JS. Cases likely broken or skipped:
 
-     * Augmented assignments (`+=`, `-=`, etc.), destructuring (`[a,b]=...`, `{x}=...`), assignments embedded in larger expressions, multi-line constructs, ternaries, `for` with comma in init, class fields, optional chaining, TS syntax in JS, etc.
-     * Member assignments (`obj.x =`), `this.x =`, `globalThis.x =` should not get declarations but may be caught by naive patterns.
-     * Names inside strings/comments can trigger word matches for "globals".
-   * The global detector assumes "functions only"; it ignores arrow functions, class methods, top-level `await`, etc.
+     - Augmented assignments (`+=`, `-=`, etc.), destructuring (`[a,b]=...`, `{x}=...`), assignments embedded in larger expressions, multi-line constructs, ternaries, `for` with comma in init, class fields, optional chaining, TS syntax in JS, etc.
+     - Member assignments (`obj.x =`), `this.x =`, `globalThis.x =` should not get declarations but may be caught by naive patterns.
+     - Names inside strings/comments can trigger word matches for "globals".
+
+   - The global detector assumes "functions only"; it ignores arrow functions, class methods, top-level `await`, etc.
 
 5. #### **Type inference is very brittle**
 
-   * The "type" inference relies on the same string-as-regex issue (#2), plus very narrow heuristics. Empty type becomes `/** @type {} */`, which is often misleading; it would be better to omit the JSDoc than assert `{}`.
+   - The "type" inference relies on the same string-as-regex issue (#2), plus very narrow heuristics. Empty type becomes `/** @type {} */`, which is often misleading; it would be better to omit the JSDoc than assert `{}`.
 
 6. #### **Edit positioning**
 
-   * Declarations are inserted before the first `function`. Files without `function` get a block at the very top, which can split shebangs (`#!`), license headers, Flow pragmas, `/* eslint-env */` comments, or `'use strict'`.
+   - Declarations are inserted before the first `function`. Files without `function` get a block at the very top, which can split shebangs (`#!`), license headers, Flow pragmas, `/* eslint-env */` comments, or `'use strict'`.
 
 7. #### **Performance & UX**
 
-   * Multiple `text.match(...)` scans over the whole document inside loops can be O(n²).
-   * No diagnostics or preview—edits just happen, making it risky in large files.
+   - Multiple `text.match(...)` scans over the whole document inside loops can be O(n²).
+   - No diagnostics or preview—edits just happen, making it risky in large files.
 
 ### Safer ways to achieve the goal (recommended alternatives)
 
-* **ESLint in VS Code** with `no-undef`, `no-redeclare`, `no-implicit-globals`. It flags exactly where declarations are missing, without guessing. Configure auto-fix on save for safe rules; manually add declarations where needed.
+- **ESLint in VS Code** with `no-undef`, `no-redeclare`, `no-implicit-globals`. It flags exactly where declarations are missing, without guessing. Configure auto-fix on save for safe rules; manually add declarations where needed.
 
-* **TypeScript or `// @ts-check`** on JS to surface "cannot find name" diagnostics via VS Code's TS server.
+- **TypeScript or `// @ts-check`** on JS to surface "cannot find name" diagnostics via VS Code's TS server.
 
-* **AST-based codemod** using the TypeScript compiler API, Babel, or jscodeshift:
+- **AST-based codemod** using the TypeScript compiler API, Babel, or jscodeshift:
 
-  * Parse to AST, compute scope, find `AssignmentExpression` whose LHS is an `Identifier` **unbound** in any enclosing scope.
-  * For `for`-init like `for (i = 0; ...)`, safely convert to `for (let i = 0; ...)`.
-  * Skip member expressions (`obj.x =`), `this.x =`, and allow a whitelist of intentional globals.
-  * Insert `let`/`const` at the correct block, not blindly `var`.
-  * (This can then be packaged as a VS Code **CodeAction** / Quick Fix tied to diagnostics.)
+  - Parse to AST, compute scope, find `AssignmentExpression` whose LHS is an `Identifier` **unbound** in any enclosing scope.
+  - For `for`-init like `for (i = 0; ...)`, safely convert to `for (let i = 0; ...)`.
+  - Skip member expressions (`obj.x =`), `this.x =`, and allow a whitelist of intentional globals.
+  - Insert `let`/`const` at the correct block, not blindly `var`.
+  - (This can then be packaged as a VS Code **CodeAction** / Quick Fix tied to diagnostics.)
 
 ### Possible Enhancements / Fixes
 
