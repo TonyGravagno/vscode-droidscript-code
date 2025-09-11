@@ -19,6 +19,7 @@ const createNewApp = require("./src/commands/create-app");
 const deleteApp = require("./src/commands/delete-app");
 const revealExplorer = require("./src/commands/revealExplorer");
 const renameApp = require("./src/commands/rename-app");
+const selectDevice = require("./src/commands/select-device");
 const smartDeclare = require('./src/commands/smartDeclare');
 
 const completionItemProvider = require("./src/providers/completionItemProvider");
@@ -79,6 +80,7 @@ async function activate(context) {
     }
     subscribe("connect", () => connectToDroidScript(dbgServ.start, setConnectionMessage));
     subscribe("cancelConnect", connectToDroidScript.cancel);
+    subscribe("selectDevice", selectDevice);
     subscribe("disconnect", () => {
         manualDisconnect = true;
         dbgServ.stop();

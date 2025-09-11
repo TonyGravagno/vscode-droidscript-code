@@ -159,6 +159,10 @@
       {
         "command": "droidscript-code.disconnect",
         "title": "DroidScript: Disconnect IDE"
+      },
+      {
+        "command": "droidscript-code.selectDevice",
+        "title": "DroidScript: Select Device"
       }
     ],
     "menus": {
