@@ -3,25 +3,29 @@
 Notable releases.
 
 ### Version 0.3.6 (Unreleased)
+
 - Now remembers successful connections in dsconfig.json.
 - Replaced the IP:port plain input box with an editable (QuickPIck) dropdown that lists known endpoints, accepts new entries, assumes :8088 when no port is provided, and trims history beyond 10 items. (QuickPick prompt accepts free-form text, so malformed addresses may be entered and stored. Will look into it soon. For now, don't do that.)
-- Implemented automatic reconnection logic that cycles through stored endpoints.
-  - Controlled by new droidscript-code.autoReconnect setting, defaults to true.
-  - Auto-reconnection only occurs after unexpected drops.
-  - Status bar shows "Trying IP:Port" to indicate which device it's trying to reach.
-  - Clicking the "Trying…" message interrupts endpoint cycling and immediately opens the endpoint picker.
-- Fixed error from invalid WS status code 1005 from DS on disconnect.
-- Removed debug line causing error log and stray number output in log.
 - Added `DroidScript: Select Device` command to choose stored IP:port endpoints.
-- Adjusted the connection-failure handler to display guidance about IP:Port endpoints, removed the Retry button, and launch the Select Device QuickPick for endpoint selection.
-
+- Implemented automatic reconnection logic that cycles through stored endpoints.
+  - Controlled by new `droidscript-code.autoReconnect` setting, defaults to true.
+  - Auto-reconnection attempt only occurs after unexpected drops, only goes through entrypoint list once.
+  - Status bar shows "Trying IP:Port" to indicate which device it's trying to reach.
+  - Clicking the "Trying…" message interrupts endpoint cycling and opens the endpoint picker.
+- Adjusted the connection-failure handler to display guidance about IP:Port endpoints, removed the Retry button, and launch the Select Device QuickPick for endpoint selection. Only first entrypoint will be retried on new selection.
+- Removed debug line causing error log and stray number output in log.
+- Fixed error from invalid WS status code 1005 from DS on disconnect.
+- Fixed error with return value of Login from retry.
 
 ### Version 0.3.5 Alpha (2025-09-03)
+
 This is an unofficial alpha - use at your own risk. Get backups!  
 See notes and track updates [here](./v0.3.5.md).
 
-### Version 0.3.4 (2024-03-29)  
-(See [Highlights](./Highlights.md))  
+### Version 0.3.4 (2024-03-29)
+
+(See [Highlights](./Highlights.md))
+
 - Improved IDE command palette
 - Re- / disconnect commands & buttons
 - Added `.dsproj` activation event
@@ -31,6 +35,7 @@ See notes and track updates [here](./v0.3.5.md).
 - Fixed bug when creating files that opened two projects
 
 ### Version 0.3.3 (2024-01-24)
+
 - Tracking **all** unsaved changes while disconnected, confirm dialog
 - Fixed smartDeclare inferring global numbers
 - Auto detect debug mode
@@ -47,6 +52,7 @@ See notes and track updates [here](./v0.3.5.md).
 - Enabled 'DroidScript: ' command palette
 
 ### Version 0.3.0 (2024-01-23)
+
 - Refactored project management
 - New `Sync Project` dialog options
 - Associate projects with custom location
@@ -60,12 +66,14 @@ See notes and track updates [here](./v0.3.5.md).
 - Many other UX improvements
 
 **Typing**
+
 - Support for JSDoc typed code bases
 - Typescript definition files for the whole DroidScript API, including Hybrid, GameView and Material UI
 - `smartDeclare` feature to migrate code to using types
 - Use the strong VSCode js/ts intellisense capabilities!
 
 ### Version 0.2.8
+
 - Fixed autocompletion, signatureHelpProvider, hoverProvider and intellisense for app scope.
 - Fixed autocompletion, signatureHelpProvider, hoverProvider and intellisense for ui scope.
 - Fixed autocompletion, signatureHelpProvider, hoverProvider and intellisense for MUI scope.
@@ -88,6 +96,7 @@ See notes and track updates [here](./v0.3.5.md).
 - Added a process to check for premium templates when creating an app in non-premium users.
 
 ### Version 0.2.6
+
 - Added Project Name at the bottom status bar.
 - Hide `.droidscript` folder to secret folder.
 - Load source files from the secret folder for intellisense support.
@@ -105,18 +114,22 @@ See notes and track updates [here](./v0.3.5.md).
 - Add `play` view-action item in each tree item in Sample section to run the samples directly in VS Code.
 
 ### Version 0.2.5 - 2023-06-30
+
 - Fixed error in downloading text files.
 
 ### 0.2.2 - 2023-06-19
+
 - Show the Documentation in the right side panel to allow persistent docs viewing.
 - Move complete dsconfig data into other place.
 - Added complete code completion and intellisense to app, ui and MUI namespaces.
 - Added complete code completion and intellisense to methods and properties on app, ui and MUI namespaces.
 
 ### 0.2.1 - 2023-06-07
+
 - Fixed space at the start of `ui` object completion.
 
 ### 0.1.9 - 2023-06-03
+
 - Fixed deletion of subfolders in the vscode extension path for samples.
 - Add the top-level documentation only to the Docs section.
 - Added network error handling for Play and Stop buttons.
@@ -125,27 +138,34 @@ See notes and track updates [here](./v0.3.5.md).
 - Fixed app not running when there is no active editor.
 
 ### 0.1.8 - 2023-05-22
+
 - Added Folders from DroidScript projects to the local copy of the project.
 - Upload assets to DroidScript project folders. Just drag and drop the files into the vscode explorer folder. All the files will then be push to the associated DroidScript project.
 
 ### 0.1.6 - 2023-05-20
+
 - Added DroidScript Samples with premium feature checking.
 - Enable running the samples within the vscode extension.
 
 ### 0.1.5 - 2023-05-19
+
 - Added DroidScript Docs and DroidScript Panel.
 - More fixes on connection errror handling.
 
 ### 0.1.4 - 2023-05-18
+
 - Added autocompletion for app, MUI and ui objects.
 
 ### 0.1.2 - 2023-05-16
+
 - Added Debug Logs on OUTPUT panel.
 - Added connection status on bottom status bar.
 - Added reconnect dialog when saving, deleting, renaming and creating files.
 
 ### 0.1.1 - 2023-04-13
+
 - Added error handling when password is incorrect.
 
 ### 0.1.0 - 2023-04-05
+
 - Initial release...
