@@ -12,7 +12,6 @@ const data = {
     serverIPs: [],
     reload: '',
     PORT: CONSTANTS.PORT,
-    PORTs: [],
     localProjects: [],
     info: {}
 };
@@ -45,16 +44,27 @@ function adjust(config) {
     if (!config.localProjects) config.localProjects = [];
     if (!config.info) config.info = {};
     if (!config.serverIPs) config.serverIPs = [];
-    if (!config.PORTs) config.PORTs = [];
 
-    // normalize serverIP and seed recent lists
+    // migrate legacy PORTs array into combined serverIPs entries
+    if (config.PORTs?.length) {
+        const merged = [];
+        for (let i = 0; i < config.serverIPs.length; i++) {
+            const host = config.serverIPs[i];
+            const port = config.PORTs[i] || config.PORT;
+            merged.push(`${host}:${port}`);
+        }
+        config.serverIPs = merged;
+        delete config.PORTs;
+    }
+
+    // normalize serverIP and seed recent list
     if (config.serverIP) {
         config.serverIP = config.serverIP.replace(/(https?:\/\/)?([^:]+)(:(\d+))?/,
             (_, r = "http://", host = "", _p, p = config.PORT) => {
                 config.PORT = p;
-                if (!config.serverIPs.includes(host)) config.serverIPs.unshift(host);
-                if (!config.PORTs.includes(p)) config.PORTs.unshift(p);
-                return `${r}${host}:${p}`;
+                const endpoint = `${host}:${p}`;
+                if (!config.serverIPs.includes(endpoint)) config.serverIPs.unshift(endpoint);
+                return `${r}${endpoint}`;
             });
     }
 

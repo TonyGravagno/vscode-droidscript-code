@@ -25,27 +25,14 @@ module.exports = async function (callback, status) {
             if (res != "Reload") { STATUS && STATUS(); return; }
         }
 
-        const ips = DSCONFIG.serverIPs;
-        const ports = DSCONFIG.PORTs;
-        let connected = false;
-        for (let i = 0; i < Math.min(ips.length, ports.length); i++) {
-            const ip = ips[i];
-            const port = ports[i];
-            STATUS && STATUS(`Trying ${ip}:${port}`);
-            connected = await connectWith(ip, port, false);
-            if (connected) break;
-        }
-        if (!connected) {
-            STATUS && STATUS();
-            showIpPopup();
-        }
+        await tryEndpoints();
     } else {
         if (CONNECTED) {
             const res = await vscode.window.showInformationMessage("Status: Connected", "Reload", "Disconnect");
             if (res == "Disconnect") vscode.commands.executeCommand("droidscript-code.disconnect");
             if (res != "Reload") return;
         }
-        if (!DSCONFIG.serverIP) showIpPopup();
+        if (!DSCONFIG.serverIP) await showIpPopup();
         else await connectWith(DSCONFIG.serverIP.replace(/https?:\/\//, '').split(':')[0], DSCONFIG.PORT, true);
     }
 }
@@ -58,12 +45,28 @@ async function showIpPopup() {
     };
     const value = await vscode.window.showInputBox(options);
     if (!value) {
-        if (value !== undefined) showIpPopup();
+        if (value !== undefined) await showIpPopup();
         return;
     }
     const [host, port = DSCONFIG.PORT] = value.trim().split(':');
-    STATUS && STATUS(`Trying ${host}:${port}`);
-    await connectWith(host, port, true);
+    const endpoint = `${host}:${port}`;
+    DSCONFIG.serverIPs = DSCONFIG.serverIPs.filter(h => h !== endpoint);
+    DSCONFIG.serverIPs.unshift(endpoint);
+    localData.save(DSCONFIG);
+    STATUS && STATUS(`Trying ${endpoint}`);
+    await tryEndpoints();
+}
+// iterate through stored endpoints until one connects
+async function tryEndpoints() {
+    const endpoints = DSCONFIG.serverIPs;
+    for (let i = 0; i < endpoints.length; i++) {
+        const [host, port = DSCONFIG.PORT] = endpoints[i].split(':');
+        STATUS && STATUS(`Trying ${host}:${port}`);
+        const connected = await connectWith(host, port, false);
+        if (connected) return;
+    }
+    STATUS && STATUS();
+    await showIpPopup();
 }
 
 /** Attempt connection to given host and port. */
@@ -99,10 +102,9 @@ async function connectWith(host, port, showError) {
     }
 
     // remember successful connection
-    DSCONFIG.serverIPs = DSCONFIG.serverIPs.filter(h => h !== host);
-    DSCONFIG.PORTs = DSCONFIG.PORTs.filter(p => p !== port);
-    DSCONFIG.serverIPs.unshift(host);
-    DSCONFIG.PORTs.unshift(port);
+    const endpoint = `${host}:${port}`;
+    DSCONFIG.serverIPs = DSCONFIG.serverIPs.filter(h => h !== endpoint);
+    DSCONFIG.serverIPs.unshift(endpoint);
 
     localData.save(DSCONFIG);
     STATUS && STATUS();
