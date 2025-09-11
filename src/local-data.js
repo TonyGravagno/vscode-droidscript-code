@@ -45,18 +45,6 @@ function adjust(config) {
     if (!config.info) config.info = {};
     if (!config.serverIPs) config.serverIPs = [];
 
-    // migrate legacy PORTs array into combined serverIPs entries
-    if (config.PORTs?.length) {
-        const merged = [];
-        for (let i = 0; i < config.serverIPs.length; i++) {
-            const host = config.serverIPs[i];
-            const port = config.PORTs[i] || config.PORT;
-            merged.push(`${host}:${port}`);
-        }
-        config.serverIPs = merged;
-        delete config.PORTs;
-    }
-
     // normalize serverIP and seed recent list
     if (config.serverIP) {
         config.serverIP = config.serverIP.replace(/(https?:\/\/)?([^:]+)(:(\d+))?/,
