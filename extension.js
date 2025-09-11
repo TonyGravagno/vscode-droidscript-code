@@ -569,7 +569,7 @@ function displayConnectionStatus() {
 
     connectionStatusBarItem.command = "droidscript-code.connect";
     if (CONNECTED) connectionStatusBarItem.text = "$(radio-tower) Connected: " + DSCONFIG.serverIP; // Wi-Fi icon
-    else connectionStatusBarItem.text = "$(circle-slash) Connect to Droidscript"; // Wi-Fi icon
+    else connectionStatusBarItem.text = "$(circle-slash) Connect to DroidScript"; // Wi-Fi icon
     connectionStatusBarItem.show();
 }
 

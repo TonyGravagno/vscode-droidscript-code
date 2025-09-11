@@ -5,6 +5,12 @@ const vscode = require('vscode');
 const ext = require("../dsclient");
 const localData = require("../local-data");
 
+// Reusable guidance shown when a connection attempt fails.
+const CONNECTION_FAILED_MSG =
+    "Connection failed. Make sure the DS App is running \n" +
+    "and IP:Port endpoint is correct.\n" +
+    "Select endpoint from above or enter a new endpoint.";
+
 /** @type {DSCONFIG_T} */
 let DSCONFIG;
 /** @type {() => void} */
@@ -34,7 +40,7 @@ module.exports = async function (callback, status) {
             if (res == "Disconnect") vscode.commands.executeCommand("droidscript-code.disconnect");
             if (res != "Reload") return;
         }
-        if (!DSCONFIG.serverIP) await showIpPopup();
+        if (!DSCONFIG.serverIP) await vscode.commands.executeCommand("droidscript-code.selectDevice");
         else await connectWith(DSCONFIG.serverIP.replace(/https?:\/\//, '').split(':')[0], DSCONFIG.PORT, true);
     }
 }
@@ -44,37 +50,6 @@ module.exports.cancel = () => {
     cancelTry = true;
 };
 
-// display a popup dialog to enter ip address
-async function showIpPopup() {
-    const quickPick = vscode.window.createQuickPick();
-    quickPick.placeholder = 'Enter IP Address: 192.168.254.112:8088';
-    quickPick.ignoreFocusOut = true;
-    quickPick.items = DSCONFIG.serverIPs.map(ip => ({ label: ip }));
-    return new Promise(resolve => {
-        quickPick.onDidAccept(async () => {
-            const value = quickPick.selectedItems[0]?.label || quickPick.value;
-            quickPick.hide();
-            if (!value) { resolve(showIpPopup()); return; }
-            const input = value.trim().replace(/^https?:\/\//, '');
-            const [host, portPart] = input.split(':');
-            const port = portPart || DSCONFIG.PORT || '8088';
-            const endpoint = `${host}:${port}`;
-            DSCONFIG.serverIPs = DSCONFIG.serverIPs.filter(h => h !== endpoint);
-            DSCONFIG.serverIPs.unshift(endpoint);
-            DSCONFIG.serverIPs = DSCONFIG.serverIPs.slice(0, 10);
-            localData.save(DSCONFIG);
-            STATUS && STATUS(`Trying ${endpoint}`);
-            const connected = await connectWith(host, port, true);
-            if (!connected) await showIpPopup();
-            resolve();
-        });
-        quickPick.onDidHide(() => {
-            quickPick.dispose();
-            resolve();
-        });
-        quickPick.show();
-    });
-}
 // iterate through stored endpoints until one connects
 async function tryEndpoints() {
     const endpoints = DSCONFIG.serverIPs;
@@ -82,7 +57,7 @@ async function tryEndpoints() {
         if (cancelTry) {
             cancelTry = false;
             STATUS && STATUS();
-            await showIpPopup();
+            await vscode.commands.executeCommand("droidscript-code.selectDevice");
             return;
         }
         const [host, port = DSCONFIG.PORT] = endpoints[i].split(':');
@@ -92,7 +67,7 @@ async function tryEndpoints() {
     }
     cancelTry = false;
     STATUS && STATUS();
-    await showIpPopup();
+    await showConnectionFailed();
 }
 
 /** Attempt connection to given host and port. */
@@ -101,17 +76,8 @@ async function connectWith(host, port, showError) {
     DSCONFIG.PORT = port;
     let info = await ext.getServerInfo(`http://${host}:${port}`);
     if (!info || info.status !== "ok") {
-        if (showError) {
-            // Display guidance without offering automatic retry; the quickpick will be shown instead.
-            await vscode.window.showErrorMessage(
-                "Make sure the DS App is running and IP:Port endpoint is correct.\n" +
-                "Select endpoint from above or enter a new endpoint."
-                // , "Retry" // Retry removed; user selects endpoint instead
-            );
-            // Open the Select Device QuickPick so the user can choose or enter a new endpoint.
-            await vscode.commands.executeCommand("droidscript-code.selectDevice");
-        }
         STATUS && STATUS();
+        if (showError) await showConnectionFailed();
         return false;
     }
 
@@ -134,6 +100,12 @@ async function connectWith(host, port, showError) {
     STATUS && STATUS();
     CALLBACK();
     return true;
+}
+
+// Notify the user and open the Select Device picker.
+async function showConnectionFailed() {
+    await vscode.window.showErrorMessage(CONNECTION_FAILED_MSG);
+    await vscode.commands.executeCommand("droidscript-code.selectDevice");
 }
 
 // Display a popup dialog to enter password
@@ -160,7 +132,7 @@ async function login(pass = '') {
     if (!data) {
         const selection = await vscode.window.showWarningMessage("IP Address cannot be reached.", "Retry", "Re-enter IP Address")
         if (selection === "Retry") login(pass);
-        else if (selection === "Re-enter IP Address") showIpPopup();
+        else if (selection === "Re-enter IP Address") await vscode.commands.executeCommand("droidscript-code.selectDevice");
         return false;
     }
 

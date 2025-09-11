@@ -26,10 +26,11 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 
 - Open DroidScript app on your phone and press the WiFi icon to start the DS WiFi IDE server. You should be able to see the IP Address on the popup message.
 - Click the **"Connect"** button in the Projects view or in the Samples view. You can also click the **"Connect to DroidScript"** button in the bottom right corner.
-- A dropdown appears where you can pick or type an **"IP Address"**.
- - Up to 10 recent IP:port endpoints are remembered and cycled through before prompting again. While cycling, the status bar shows `Trying host:port`; click this text to stop and open the dropdown immediately.
- - If you omit the `:port`, the extension assumes `:8088` or the last used port. Selecting or typing an address attempts only that endpoint and returns to the dropdown if it fails.
-- A **"Password"** prompt follows when required.
+ - A dropdown appears where you can pick or type an **"IP Address"**.
+   - Up to 10 recent IP:port endpoints are remembered and cycled through before prompting again. While cycling, the status bar shows `Trying host:port`; click this text to stop and open the dropdown immediately.
+   - If you omit the `:port`, the extension assumes `:8088` or the last used port. Selecting or typing an address updates the default endpoint; run **Connect** again to retry.
+   - If all endpoints fail, an error explains the failure and the **DroidScript: Select Device** picker opens so you can choose or enter a new endpoint.
+ - A **"Password"** prompt follows when required.
 - By default the extension automatically retries connection attempts when the server disconnects unexpectedly. This behaviour
   can be disabled by setting `"droidscript-code.autoReconnect": false` in your VS Code settings.
 - Use `DroidScript: Select Device` from the Command Palette to choose or enter an endpoint without connecting.
