@@ -156,7 +156,7 @@ async function login(pass = "") {
       ))
         ? "Retry" // selection returned true, there's a new address to retry
         : null; // selection returned false, no selection made, no retry
-    if (selection === "Retry") login(pass);
+    if (selection === "Retry") return login(pass);
     return false;
   }
 
