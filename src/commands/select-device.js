@@ -27,7 +27,10 @@ module.exports = async function selectDevice() {
         quickPick.show();
     });
 
-    if (!endpoint) return;
+  if (!endpoint) {
+    void vscode.window.showInformationMessage(`No device selected`);
+    return false; // No device selected
+  }
     // Normalize the chosen endpoint and persist it.
     const value = endpoint.trim().replace(/^https?:\/\//, '');
     const [host, portPart] = value.split(':');
