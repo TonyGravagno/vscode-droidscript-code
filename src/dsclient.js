@@ -5,6 +5,7 @@
     This is a wrapper to the DS Code extension.
 */
 
+const vscode = require("vscode");
 const _axios = require("axios").default;
 const querystring = require("querystring");
 const FormData = require("form-data");
@@ -45,7 +46,19 @@ const catchError = (error) => {
 /** @type {(IP?: string) => Promise<DSServerResponse<DSCONFIG_T>>} */
 async function getServerInfo(IP = "") {
   const url = `${IP || DSCONFIG.serverIP}/ide?cmd=getinfo`;
-  let response = await axios.get(url, { timeout: 2000 }).catch((error) => {
+  /**
+   * @type  {vscode.WorkspaceConfiguration} All settings.json config options
+   */
+  let timeout = vscode.workspace
+    .getConfiguration("droidscript-code")
+    .get("connectionTimeout", 5000);
+  if (!timeout || (timeout && typeof timeout !== "number")) {
+    console.error(
+      `Invalid settings.json droidscript-code.connectionTimeout '${timeout}'. Using 5000ms`
+    );
+    timeout = 5000;
+  }
+  let response = await axios.get(url, { timeout }).catch((error) => {
     if (error?.message && String(error.message).startsWith("timeout")) {
       console.error(`${url} : ${error.message}`);
       return { status: undefined, data: { status: "bad", error } };

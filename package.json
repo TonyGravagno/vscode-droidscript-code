@@ -29,7 +29,7 @@
         "droidscript-code.connectionTimeout": {
           "type": "integer",
           "default": 3000,
-          "description": "Milliseconds allowed for initial connection before timeout/failure."
+          "description": "Milliseconds allowed for initial connection before timeout/failure. Default 3000, recommended minimum 1600."
         }
       }
     },
