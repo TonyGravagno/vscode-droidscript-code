@@ -175,7 +175,7 @@ async function activate(context) {
   prepareWorkspace();
 
   const assetsExist =
-    fs.existsSync(homePath(CONSTANTS.DEFINITIONS)) ||
+    fs.existsSync(homePath(CONSTANTS.DEFINITIONS)) &&
     fs.existsSync(homePath(CONSTANTS.SAMPLES));
 
   if (CONSTANTS.VERSION > DSCONFIG.VERSION || !assetsExist || CONSTANTS.DEBUG) {
