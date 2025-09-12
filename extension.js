@@ -1168,7 +1168,7 @@ async function openProjectFolder(proj, sync = true) {
   let info = await ext.getProjectInfo(proj.path, proj.PROJECT, async (p) =>
     fs.existsSync(p)
   );
-  const exists = info != null;
+  const exists = info !== null;
   if (!exists && sync) {
     folderPath = vscode.Uri.file(proj.path);
     setProjectName(proj.PROJECT);
