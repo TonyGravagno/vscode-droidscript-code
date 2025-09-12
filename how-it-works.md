@@ -35,7 +35,7 @@
 - `.dsproj` — JSON marker file in each project folder. `openProjectFolder()` writes an empty `{}` file when a project is added so the `workspaceContains:.dsproj` activation event fires. The file isn't modified afterwards; deleting it prevents activation. Developers extending this file should update read/write logic to tolerate missing fields and keep the extension's activation event unchanged【F:extension.js】【F:package.json】.
 - `dsconfig.json` — stored in the `.droidscript` folder under the user's home directory.
   - `src/local-data.js` defines its schema with keys such as `VERSION`, `serverIP`, `serverIPs[]`, `PORT`, `localProjects[]`, and `info{}`. `serverIPs[]` holds up to 10 full `ip:port` device endpoints. Each `localProjects` item (not limited to 10) records `path`, `PROJECT`, `reload`, and `created` timestamps.
-  - The file is created on first run and saved whenever projects or settings change. The file was previously directly in the user's home folder. As of v0.3.6 it's transparently migrated by local-data.js migrateConfigFile().
+  - The file is created on first run and saved whenever projects or settings change. The file was previously in the user's home folder. As of v0.3.6 it's transparently migrated by local-data.js migrateConfigFile().
   - During activation, if `VERSION` is older than the current extension, `activate()` calls `extractAssets()`, updates the version number, and writes the file back【F:src/local-data.js】【F:src/types.d.ts】【F:extension.js】.
   - To add new fields:
     - update the default object and `adjust()` in `src/local-data.js`,

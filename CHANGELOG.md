@@ -42,7 +42,7 @@ See notes and track updates [here](./v0.3.5.md).
 - Fixed smartDeclare inferring global numbers
 - Auto detect debug mode
 - Fixed opening main file when opening projects
-- Focus vscode explorer view when opening projects
+- Focus VSCode explorer view when opening projects
 - Fixed build excluding required source file
 - Showing Release Highlight page
 - Always show sync qickpick on project open
@@ -132,7 +132,7 @@ See notes and track updates [here](./v0.3.5.md).
 
 ### 0.1.9 - 2023-06-03
 
-- Fixed deletion of subfolders in the vscode extension path for samples.
+- Fixed deletion of subfolders in the VSCode extension path for samples.
 - Add the top-level documentation only to the Docs section.
 - Added network error handling for Play and Stop buttons.
 - Fixed samples not showing when selected.
@@ -142,12 +142,12 @@ See notes and track updates [here](./v0.3.5.md).
 ### 0.1.8 - 2023-05-22
 
 - Added Folders from DroidScript projects to the local copy of the project.
-- Upload assets to DroidScript project folders. Just drag and drop the files into the vscode explorer folder. All the files will then be push to the associated DroidScript project.
+- Upload assets to DroidScript project folders. Just drag and drop the files into the VSCode explorer folder. All the files will then be push to the associated DroidScript project.
 
 ### 0.1.6 - 2023-05-20
 
 - Added DroidScript Samples with premium feature checking.
-- Enable running the samples within the vscode extension.
+- Enable running the samples within the VSCode extension.
 
 ### 0.1.5 - 2023-05-19
 
