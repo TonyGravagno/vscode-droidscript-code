@@ -25,17 +25,15 @@ A new [contributing.md](contributing.md) doc provides specific information to al
 
 ## Random
 
-Small issues were fixed along with my text typos.
+Small code and text issues were fixed.
 
 The SmartDeclare feature was reviewed, doesn't seem to be working, and will be reviewed again. The best thing to do for type safety is to follow the information added with 0.3.4 and setup ESLint handling.
-
-Code Samples are not being pulled from the device. This will be fixed soon.
 
 To see and report issues and enhancement requests, please see [contributing.md](contributing.md).
 
 # DroidScript-Code 0.3.5 Release Notes
 
-Production v0.3.4 with a few updates
+Production v0.3.4 plus @dada fixed Samples not loading from device.
 
 # DroidScript-Code 0.3.4 Release Notes
 
