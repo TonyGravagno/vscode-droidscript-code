@@ -174,7 +174,10 @@ async function activate(context) {
 
   prepareWorkspace();
 
-  const assetsExist = fs.existsSync(homePath(CONSTANTS.LOCALFOLDER));
+  const assetsExist =
+    fs.existsSync(homePath(CONSTANTS.DEFINITIONS)) ||
+    fs.existsSync(homePath(CONSTANTS.SAMPLES));
+
   if (CONSTANTS.VERSION > DSCONFIG.VERSION || !assetsExist || CONSTANTS.DEBUG) {
     // extract assets
     extractAssets();
@@ -204,25 +207,21 @@ function deactivate() {
 // Assets related functions
 async function extractAssets() {
   try {
-    // clear .droidscript folder first
-    fs.removeSync(homePath(CONSTANTS.LOCALFOLDER));
-
-    await createAssetFolder(CONSTANTS.LOCALFOLDER);
-    await createAssetFolder(CONSTANTS.SAMPLES);
-    await createAssetFolder(CONSTANTS.DEFINITIONS);
+    await createAssetFolder(CONSTANTS.LOCALFOLDER, false);
+    await createAssetFolder(CONSTANTS.SAMPLES, true);
+    await createAssetFolder(CONSTANTS.DEFINITIONS, true);
 
     const defFolder = path.join(__dirname, "definitions");
-    fs.copySync(defFolder, homePath(CONSTANTS.DEFINITIONS), {
-      overwrite: true,
-    });
+    fs.copySync(defFolder, homePath(CONSTANTS.DEFINITIONS));
   } catch (e) {
     catchError(e);
   }
 }
 
-/** @param {string} paths */
-async function createAssetFolder(paths) {
-  fs.mkdirSync(homePath(paths), { recursive: true });
+/** @param {string} path */
+async function createAssetFolder(path, removeFirst = false) {
+  if (removeFirst) fs.removeSync(homePath(path));
+  fs.mkdirSync(homePath(path), { recursive: true });
 }
 
 async function prepareWorkspace() {
@@ -660,7 +659,8 @@ function displayConnectionStatus() {
   connectionStatusBarItem.command = "droidscript-code.connect";
   if (CONNECTED)
     connectionStatusBarItem.text =
-      "$(radio-tower) Connected: " + DSCONFIG.serverIP; // Wi-Fi icon
+      "$(radio-tower) Connected: " + DSCONFIG.serverIP;
+  // Wi-Fi icon
   else connectionStatusBarItem.text = "$(circle-slash) Connect to DroidScript"; // Wi-Fi icon
   connectionStatusBarItem.show();
 }
