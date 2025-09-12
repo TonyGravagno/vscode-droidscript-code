@@ -108,4 +108,10 @@ const getProjectByName = (name, CONFIG = data) =>
 const getProjectByFile = (file, CONFIG = data) =>
   CONFIG.localProjects.find((p) => file.startsWith(p.path + path.sep));
 
-module.exports = { load, save, getProject, getProjectByName, getProjectByFile };
+module.exports = {
+  load,
+  save,
+  getProject,
+  getProjectByName,
+  getProjectByFile,
+};
