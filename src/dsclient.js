@@ -24,7 +24,8 @@ const axios = {
     let display = res.data instanceof Buffer ? res.data.toString() : res.data;
     // @ts-ignore
     display = typeof res.data === "string" ? res.data.slice(0, 256) : res.data;
-    console.log(url, display);
+    console.log(url);
+    console.log(display);
     return res;
   },
 
@@ -58,6 +59,7 @@ async function getServerInfo(IP = "") {
     );
     timeout = 5000;
   }
+  console.log(url);
   let response = await axios.get(url, { timeout }).catch((error) => {
     if (error?.message && String(error.message).startsWith("timeout")) {
       console.error(`${url} : ${error.message}`);
@@ -153,8 +155,10 @@ async function getSamples(type = "js") {
   let data = { type: "array", samples: [] };
 
   if (!CONNECTED) return data;
-
-  if ((DSCONFIG.info.version || 0) < 3) {
+  // If there's no DS version, something is broken, but for now,
+  // default DS to version 2.70 unless it's higher.
+  // For lower than 2.70, use only getsamples command.
+  if ((DSCONFIG.info.version || 2.7) < 2.7) {
     const url = `${DSCONFIG.serverIP}/ide?cmd=getsamples&type=${type}`;
 
     const response = await axios.get(url).catch(catchError);
@@ -172,6 +176,8 @@ async function getSamples(type = "js") {
       };
     }
   } else {
+    // for DS 2.70+ use a different port 8018 for samples and
+    // use new getAllSamples endpoint rather than /ide?cmd=getsamples
     let serverIP = DSCONFIG.serverIP.replace(
       DSCONFIG.PORT,
       CONSTANTS.SAMPLE_PORT
