@@ -1,9 +1,14 @@
 # Change Log
 
-Notable releases.
+This 0.3.6 build is currently in alpha, not merged into the official repo. Please test and report findings, noting v0.3.6 Alpha, in the official repo or in the Discord server:
 
-### Version 0.3.6 (Unreleased)
+- Server : https://discord.com/invite/MUhvxxbXeK
+- Channel : DroidScript > #vscode
 
+### Version 0.3.6 (Unreleased Alpha) 2025/09/12
+
+- Most dependencies have been updated. Everything should work in VSCode 1.76-current (103+) on all OS platforms.
+- ECMA Script support set to ES2020. DS "should" support current/ES2025. This is a bump to recognize more current support but developers need to specify their actual/preferred level.
 - The ~/dsconfig.json file auto-migrates from the user's home folder to ~/.droidscript/dsconfig.json. There's nothing to do, it just moves and will always used from there.
 - Now remembers successful connections in dsconfig.json.
 - Replaced the IP:port plain input box with an editable (QuickPIck) dropdown that lists known endpoints, accepts new entries, assumes :8088 when no port is provided, and trims history beyond 10 items. (QuickPick prompt accepts free-form text, so malformed addresses may be entered and stored. Will look into it soon. For now, don't do that.)
@@ -19,10 +24,11 @@ Notable releases.
 - Fixed error from invalid WS status code 1005 from DS on disconnect.
 - Fixed error with return value of Login from retry.
 
-### Version 0.3.5 Alpha (2025-09-03)
+### Version 0.3.5
 
-This is an unofficial alpha - use at your own risk. Get backups!  
-See notes and track updates [here](./v0.3.5.md).
+This is the official release, v0.3.4 with a small change.
+
+This version fixes [Disconnnection Issues](https://github.com/hamacjumar/vscode-droidscript-code/issues/7) reported in v0.2x.
 
 ### Version 0.3.4 (2024-03-29)
 

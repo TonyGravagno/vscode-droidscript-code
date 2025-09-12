@@ -4,14 +4,19 @@
 
 - VS Code activates the extension when a workspace contains a `.dsproj` file, as declared in `package.json`【F:package.json】.
 - `activate()` wires command registrations, file‑system watchers, and the Projects, Docs, and Samples tree views before extracting bundled assets if the local cache is missing or outdated【F:extension.js】.
-- `extractAssets()` deletes any existing `~/.droidscript` folder then recreates `samples` and `definitions` from extension resources【F:extension.js】.
+- `extractAssets()` deletes existing `~/.droidscript` asset sub-folders then recreates `samples` and `definitions` from extension resources【F:extension.js】.
 
 ## Connecting to a device
 
-- Command `droidscript-code.connect` launches `connect-to-droidscript.js`, which cycles through IP:port endpoints in `serverIPs[]` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt. Clicking the status bar's `Trying` message cancels the loop and immediately invokes **DroidScript: Select Device**. If all endpoints fail, an error message appears and the picker opens. The picker lists past endpoints and accepts new entries without a port, defaulting to `:8088` or the current `PORT`; selecting an entry updates the default endpoint without connecting【F:src/commands/connect-to-droidscript.js】.
+- Command `droidscript-code.connect` launches `connect-to-droidscript.js`, which cycles through IP:port endpoints in `serverIPs[]` from `dsconfig.json` (history capped at 10), updating the status bar for each attempt.
+- Clicking the status bar's `Trying` message cancels the loop and immediately invokes **DroidScript: Select Device**.
+- If all endpoints fail, an error message appears and the picker opens.
+- The picker lists past endpoints and accepts new entries with or without a port, defaulting to `:8088` or the current `PORT`.
 - Successful connections move the working endpoint to the head of `serverIPs[]` and save it alongside `serverIP` and `PORT`【F:src/commands/connect-to-droidscript.js】.
-- `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer; on close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js】. The setting `droidscript-code.connectionTimeout` is passed to the websocket constructor, and determines many milliseconds to wait before giving up a failed connection.
-- When the connection comes up, `downloadDefinitions()` copies `.d.ts` files from the device into `~/.droidscript/definitions/ts` so UI metadata is cached locally【F:extension.js】.
+- `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer.
+- On close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js】.
+- The setting `droidscript-code.connectionTimeout` is passed to the websocket constructor, and determines how many milliseconds to wait before giving up a failed connection.
+- When the connection is established, `downloadDefinitions()` copies `.d.ts` files from the device into `~/.droidscript/definitions/ts` so UI metadata is cached locally【F:extension.js】.
 
 ## Disconnect behavior
 
@@ -34,7 +39,9 @@
 
 - `.dsproj` — JSON marker file in each project folder. `openProjectFolder()` writes an empty `{}` file when a project is added so the `workspaceContains:.dsproj` activation event fires. The file isn't modified afterwards; deleting it prevents activation. Developers extending this file should update read/write logic to tolerate missing fields and keep the extension's activation event unchanged【F:extension.js】【F:package.json】.
 - `dsconfig.json` — stored in the `.droidscript` folder under the user's home directory.
-  - `src/local-data.js` defines its schema with keys such as `VERSION`, `serverIP`, `serverIPs[]`, `PORT`, `localProjects[]`, and `info{}`. `serverIPs[]` holds up to 10 full `ip:port` device endpoints. Each `localProjects` item (not limited to 10) records `path`, `PROJECT`, `reload`, and `created` timestamps.
+  - `src/local-data.js` defines its schema with keys such as `VERSION`, `serverIP`, `serverIPs[]`, `PORT`, `localProjects[]`, and `info{}`.
+  - `serverIPs[]` holds up to 10 full `ip:port` device endpoints.
+  - Each `localProjects` item records `path`, `PROJECT`, `reload`, and `created` timestamps.
   - The file is created on first run and saved whenever projects or settings change. The file was previously in the user's home folder. As of v0.3.6 it's transparently migrated by local-data.js migrateConfigFile().
   - During activation, if `VERSION` is older than the current extension, `activate()` calls `extractAssets()`, updates the version number, and writes the file back【F:src/local-data.js】【F:src/types.d.ts】【F:extension.js】.
   - To add new fields:
@@ -44,9 +51,9 @@
 - `~/.droidscript` - folder under the home directory.
   - Contains `dsconfig.json` configuration file.
   - Contains an asset cache:
-  - `extractAssets()` removes the folder and recreates `samples` and `definitions` subdirectories,
-  - `downloadDefinitions()` populates `definitions/ts` with `.d.ts` files from the device【F:extension.js】【F:src/CONSTANTS.js】.
-  - The sub-folders are created when missing and rebuilt when the extension version increases.
+    - `extractAssets()` removes the folder and recreates `samples` and `definitions` subdirectories,
+    - `downloadDefinitions()` populates `definitions/ts` with `.d.ts` files from the device【F:extension.js】【F:src/CONSTANTS.js】.
+    - The sub-folders are created when missing and rebuilt when the extension version increases.
 - `jsconfig.json` — optional per‑project file controlling TypeScript checks and file‑sync exclusions.
   - `addTypes` writes a default configuration file if one is missing,
   - `loadConfig()` reads it,

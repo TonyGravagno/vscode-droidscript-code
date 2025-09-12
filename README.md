@@ -10,15 +10,21 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 
 ### Download DroidScript app from [Google Play](https://play.google.com/store/apps/details?id=com.smartphoneremote.androidscriptfree)
 
+## Updates for current user/developers
+
+For version 0.2.7 and above, the documentation is displayed on the right panel served locally. To view docs smoothly, install the `"Live Preview"` extension [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server).
+
+This version fixes issue where v0.2.x does not connect to the latest VSCode versions.
+
+See detailed [Changelog](chaneglog.md).  
+See [Highlights](highlights.md).  
+New [How It Works](how-it-works.md) doc for extension developers/contributors.
+New [Contributing](contributing.md) ... it's FOSS.
+
 ## Extension Requirements
 
-* You should have DroidScript app installed in your phone.
-* The phone and this laptop/desktop should be connected to the same WiFi network.
-
-> For version 0.2.7 and above, the documentation is displayed on the right panel served locally. To view docs smoothly, install the `"Live Preview"` extension [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server).
-
-> Production version 0.2.8 does not connect to the latest VSCode versions. See notes for [v0.3.5 Alpha](./v0.3.5.md) which is now in testing. Stability has not yet been determined.
-
+- You should have DroidScript app installed in your phone.
+- The phone and this laptop/desktop should be connected to the same WiFi network.
 
 ## How to connect to DroidScript?
 
@@ -26,14 +32,13 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 
 - Open DroidScript app on your phone and press the WiFi icon to start the DS WiFi IDE server. You should be able to see the IP Address on the popup message.
 - Click the **"Connect"** button in the Projects view or in the Samples view. You can also click the **"Connect to DroidScript"** button in the bottom right corner.
- - A dropdown appears where you can pick or type an **"IP Address"**.
-   - Up to 10 recent IP:port endpoints are remembered and cycled through before prompting again. While cycling, the status bar shows `Trying host:port`; click this text to stop and open the dropdown immediately after the current connection timeout.
-   - If you omit the `:port`, the extension assumes `:8088` or the last used port. Selecting or typing an address updates the default endpoint; run **Connect** again to retry.
- - A **"Password"** prompt follows when required.
+- A dropdown appears where you can pick or type an **"IP Address"**.
+  - Up to 10 recent IP:port endpoints are remembered and cycled through before prompting again. While cycling, the status bar shows `Trying host:port`; click this text to stop and open the dropdown immediately after the current connection timeout.
+  - If you omit the `:port`, the extension assumes `:8088` or the last used port. Selecting or typing an address updates the default endpoint; run **Connect** again to retry.
+- A **"Password"** prompt follows when required.
 - By default the extension automatically retries connection attempts when the server disconnects unexpectedly. This behaviour
   can be disabled by setting `"droidscript-code.autoReconnect": false` in your VS Code settings.
 - Use `DroidScript: Select Device` from the Command Palette to choose or enter an endpoint without connecting.
-
 
 ## How to open an app?
 
@@ -50,7 +55,7 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 - Go to **DroidScript** section.
 - In the **"PROJECTS"** view title, click the **`"+"`** icon at the right.
 - A quick pick popup will be shown at the top. Select the type of app and follow the next step to "Enter app name" and "App type".
-> You can also right-click on any app and select the `"Create new app"` item in the context menu.
+  > You can also right-click on any app and select the `"Create new app"` item in the context menu.
 
 ## How to rename an app?
 
@@ -81,7 +86,7 @@ Alternatively you can use the `alt+r` and `alt+s` shortcuts already known from t
 
 - Go to **DroidScript** section.
 - Expand the **`"DOCS"`** view and select **`"Documentation"`** tree item.
-> A live preview window will be open in the right panel of VS Code.
+  > A live preview window will be open in the right panel of VS Code.
 
 ## Samples
 
@@ -116,5 +121,6 @@ Initially you might see dozens of type errors in your source files. You can use 
 <br>
 
 #### Author
+
 - **GineersLife:** - *hamacjumar@gmail.com*
 - **Symbroson:** - *alex-Symbroson@gmail.com*
