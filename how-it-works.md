@@ -2,7 +2,8 @@
 
 ## Extension activation and assets
 
-- VS Code activates the extension when a workspace contains a `.dsproj` file, as declared in `package.json`【F:package.json】.
+- VS Code activates the extension when a workspace contains a `.dsproj` file, as declared in `package.json`【F:package.json】.  
+  `"activationEvents": [ "workspaceContains:.dsproj" ]`
 - `activate()` wires command registrations, file‑system watchers, and the Projects, Docs, and Samples tree views before extracting bundled assets if the local cache is missing or outdated【F:extension.js】.
 - `extractAssets()` deletes existing `~/.droidscript` asset sub-folders then recreates `samples` and `definitions` from extension resources【F:extension.js】.
 

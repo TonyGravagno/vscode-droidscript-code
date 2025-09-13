@@ -118,6 +118,7 @@ Initially you might see dozens of type errors in your source files. You can use 
 - Project doesnt automatically reload when replacing the root workspace folder
 - Bottom action buttons are not initially shown
 - In prior versions a folder created in VS wasn't mirrored at all in DS. In 0.3.6 the folder is created but we can't see it in the DS file explorer which only shows a folder if it has a file (we see this in Git/GitHub). Once a file is added to the folder, DS will always shows the folder, even when it is emptied. This should be improved in a later update.
+- On saving a file VSCode may report "Invalid prettier configuration file detected." or "ENOENT: no such file or directory" or similar errors that all mean the file can't be linted or prettified.
 
 <br>
 

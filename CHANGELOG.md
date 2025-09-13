@@ -21,6 +21,7 @@ This 0.3.6 build is currently in alpha, not merged into the official repo. Pleas
 - Adjusted the connection-failure handler to display guidance about IP:Port endpoints, removed the Retry button, and launch the Select Device QuickPick for endpoint selection. Only first entrypoint will be retried on new selection.
 - While connected, status bar "Connected" text is clickable for disconnect or device selection.
 - Timeout on initial connection now shows relevant message in debug console rather than stack trace.
+- Several notifications with prompts or important warnings/errors have been raised to modal dialogs. These important prompts and issues are not seen if the user has DS notifications suppressed. More tuning may be required.
 - Removed debug line causing error log and stray number output in log.
 - Fixed error from invalid WS status code 1005 from DS on disconnect.
 - Fixed error with return value of Login from retry.
