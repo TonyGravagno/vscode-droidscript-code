@@ -129,6 +129,7 @@ function Logger(log) {
     Debugger.show(true); // Show the output channel in the OUTPUT panel
     Debugger.appendLine(log); // Append the log message to the output channel
   }
+  console.log(log);
 }
 
 /** @param {string} msg */
