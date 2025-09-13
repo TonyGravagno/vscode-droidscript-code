@@ -149,6 +149,22 @@ async function activate(context) {
   subscribe("openSample", openSample);
   subscribe("runSample", runSampleProgram);
 
+  subscribe("connectedAction", async () => {
+    let selection = await vscode.window.showErrorMessage(
+      "Disconnect?",
+      "Yes",
+      "No",
+      "Select another device"
+    );
+    if (selection === "Select another device")
+      await vscode.commands.executeCommand("droidscript-code.selectDevice");
+
+    if (selection === "Yes") {
+      manualDisconnect = true;
+      await vscode.commands.executeCommand("droidscript-code.disconnect");
+    }
+  });
+
   const createFile = vscode.workspace.onDidCreateFiles(onCreateFile);
   const deleteFile = vscode.workspace.onDidDeleteFiles(onDeleteFile);
   const onSave = vscode.workspace.onDidSaveTextDocument(onDidSaveTextDocument);
@@ -678,7 +694,7 @@ function displayConnectionStatus() {
   if (CONNECTED) {
     connectionStatusBarItem.text =
       "$(radio-tower) Connected: " + DSCONFIG.serverIP; // Wi-Fi icon
-    connectionStatusBarItem.command = "droidscript-code.disconnect";
+    connectionStatusBarItem.command = "droidscript-code.connectedAction";
   } else {
     connectionStatusBarItem.text = "$(circle-slash) Connect to DroidScript"; // Wi-Fi icon
     connectionStatusBarItem.command = "droidscript-code.connect";

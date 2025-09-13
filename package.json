@@ -168,6 +168,10 @@
       {
         "command": "droidscript-code.selectDevice",
         "title": "DroidScript: Select Device"
+      },
+      {
+        "command": "droidscript-code.connectedAction",
+        "title": "DroidScript: Actions available while connected"
       }
     ],
     "menus": {
