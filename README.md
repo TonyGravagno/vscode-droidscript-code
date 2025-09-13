@@ -103,7 +103,7 @@ This extension provides basic intellisense for `app`, `ui` and `MUI` scopes. You
 
 ## Advanced Intellisense
 
-Use the integrated VSCode Intellisense to help writing better code. To enable native type checks, right-click on a Project in the Project tree view (not file Explorer) and click `Enable Types`. This will add a `jsconfig.json` file to your project with a basic TSLint configuration.
+Use the integrated VSCode Intellisense to help with writing better code. To enable native type checks, right-click on a Project in the Project tree view (not file Explorer) and click `Enable Types`. This will add a `jsconfig.json` file to your project with a basic TSLint configuration.
 
 Initially you might see dozens of type errors in your source files. You can use the `Smart Declare Variables` feature by right-clicking on the Project or a file in the VSCode Explorer, which then scans and automatically adds missing variable declarations on the fly. This should greatly reduce the remaining errors which you will have to address on your own.\
 **Note:** SmartDeclare (unique and built-in to this project) is based on regular expressions and doesn't have a structural understanding of your code. Use at your own risk. Simply undo the changes if the resulting changes are largely undesired.
@@ -117,6 +117,7 @@ Initially you might see dozens of type errors in your source files. You can use 
 
 - Project doesnt automatically reload when replacing the root workspace folder
 - Bottom action buttons are not initially shown
+- In prior versions a folder created in VS wasn't mirrored at all in DS. In 0.3.6 the folder is created but we can't see it in the DS file explorer which only shows a folder if it has a file (we see this in Git/GitHub). Once a file is added to the folder, DS will always shows the folder, even when it is emptied. This should be improved in a later update.
 
 <br>
 
