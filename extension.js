@@ -675,12 +675,14 @@ function displayConnectionStatus() {
     connectionStatusBarItem.tooltip = "DroidScript Connection Status";
   }
 
-  connectionStatusBarItem.command = "droidscript-code.connect";
-  if (CONNECTED)
+  if (CONNECTED) {
     connectionStatusBarItem.text =
-      "$(radio-tower) Connected: " + DSCONFIG.serverIP;
-  // Wi-Fi icon
-  else connectionStatusBarItem.text = "$(circle-slash) Connect to DroidScript"; // Wi-Fi icon
+      "$(radio-tower) Connected: " + DSCONFIG.serverIP; // Wi-Fi icon
+    connectionStatusBarItem.command = "droidscript-code.disconnect";
+  } else {
+    connectionStatusBarItem.text = "$(circle-slash) Connect to DroidScript"; // Wi-Fi icon
+    connectionStatusBarItem.command = "droidscript-code.connect";
+  }
   connectionStatusBarItem.show();
 }
 
