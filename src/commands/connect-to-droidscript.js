@@ -53,6 +53,10 @@ module.exports = async function (callback, status) {
 module.exports.cancel = () => {
   cancelTry = true;
 };
+// expose tryFirst function so only current/first device selection is tried
+module.exports.tryFirst = () => {
+  tryFirstEntrypoint = true;
+};
 
 // iterate through stored endpoints until one connects
 async function tryEndpoints() {
