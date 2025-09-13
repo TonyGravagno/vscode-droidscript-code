@@ -572,10 +572,12 @@ async function onCreateFile(e) {
           "An error occured while writing the file in DroidScript."
         );
     } else if (stats.isDirectory()) {
-      // folder
-      // const code = `app.MakeFolder("${filePath}")`;
-      // response = await ext.execute("usr", code);
-      // console.log( response );
+      // Create the corresponding directory on the device
+      const response = await ext.execute("usr", `app.MakeFolder("${dsFile}")`);
+      if (!response || response.status !== 200)
+        vscode.window.showErrorMessage(
+          "An error occured while creating the folder in DroidScript."
+        );
     }
   });
 }
