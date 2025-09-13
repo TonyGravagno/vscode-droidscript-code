@@ -57,6 +57,9 @@ let dbgServ;
 // Flag to track user-initiated disconnects so auto-reconnect only triggers on
 // unexpected drops.
 let manualDisconnect = false;
+// Flag to indicate newly selected device requires disconnect and immediate
+// reconnect to the new device
+let deviceIsSelected = false;
 
 /** @type {vscode.StatusBarItem?} */
 let syncButton;
@@ -88,11 +91,25 @@ async function activate(context) {
       vscode.commands.registerCommand("droidscript-code." + cmd, fnc)
     );
   };
-  subscribe("connect", () =>
-    connectToDroidScript(dbgServ.start, setConnectionMessage)
-  );
+  subscribe("connect", () => {
+    connectToDroidScript(dbgServ.start, setConnectionMessage);
+  });
   subscribe("cancelConnect", connectToDroidScript.cancel);
-  subscribe("selectDevice", selectDevice);
+  subscribe("selectDevice", async () => {
+    deviceIsSelected = await selectDevice();
+    if (deviceIsSelected) {
+      connectToDroidScript.tryFirst();
+      if (CONNECTED) {
+        vscode.commands.executeCommand("droidscript-code.disconnect");
+        // if already connected, the wrapup process will
+        // initiate a new connection when it's done.
+        // don't fall through here - the connect will
+        // execute too early.
+      } else {
+        vscode.commands.executeCommand("droidscript-code.connect");
+      }
+    }
+  });
   subscribe("disconnect", () => {
     manualDisconnect = true;
     dbgServ.stop();
@@ -1052,7 +1069,7 @@ async function onDebugServerStop() {
   const autoReconnect = vscode.workspace
     .getConfiguration("droidscript-code")
     .get("autoReconnect", true);
-  if (!manualDisconnect && autoReconnect) {
+  if ((!manualDisconnect && autoReconnect) || deviceIsSelected) {
     vscode.commands.executeCommand("droidscript-code.connect");
   } else if (!manualDisconnect) {
     const selection = await vscode.window.showWarningMessage(
