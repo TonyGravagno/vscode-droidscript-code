@@ -935,18 +935,18 @@ async function execCommand() {
 async function addTypes(item) {
   if (!item.path)
     return vscode.window.showWarningMessage(
-      "Types can be only enabled on local projects."
+      "Types can only be enabled on local projects."
     );
 
   const jsconfigPath = path.join(item.path, "jsconfig.json");
   if (fs.existsSync(jsconfigPath)) return;
 
-  const res = await vscode.window.showInformationMessage(
+  const res = await vscode.window.showWarningMessage(
     "This will add jsconfig.json to your project. Proceed?",
-    "Ok",
-    "Cancel"
+    { modal: true },
+    "OK"
   );
-  if (res !== "Ok") return;
+  if (res !== "OK") return;
 
   try {
     let jsconfig = fs.readFileSync(
@@ -964,7 +964,7 @@ async function addTypes(item) {
 async function autoFormat(item) {
   if (!item.path)
     return vscode.window.showWarningMessage(
-      "AutoFormat can be only enabled on local projects."
+      "AutoFormat can only be enabled on local projects."
     );
 
   const settingsPath = path.join(item.path, ".vscode", "settings.json");
@@ -972,10 +972,10 @@ async function autoFormat(item) {
 
   const res = await vscode.window.showInformationMessage(
     "This will add .vscode/settings.json to your project. Proceed?",
-    "Ok",
-    "Cancel"
+    { modal: true },
+    "OK"
   );
-  if (res !== "Ok") return;
+  if (res !== "OK") return;
 
   try {
     fs.mkdirSync(path.dirname(settingsPath), { recursive: true });
@@ -1001,11 +1001,13 @@ async function smartDeclareVars(file) {
     );
     if (!info)
       return vscode.window.showWarningMessage(
-        "No local project '" + uri.title + "' available."
+        "No local project '" + uri.title + "' available.",
+        { modal: true }
       );
     if (info.ext !== "js")
       return vscode.window.showWarningMessage(
-        uri.title + " is not a JavaScript project."
+        uri.title + " is not a JavaScript project.",
+        { modal: true }
       );
     uri = vscode.Uri.file(info.file);
   }
@@ -1178,9 +1180,9 @@ async function openProject(item) {
   } else await fs.mkdir(folder).catch(catchError);
 
   if (!fs.existsSync(folder))
-    return vscode.window.showInformationMessage(
-      "Selected folder does not exist."
-    );
+    return vscode.window.showWarningMessage("Selected folder does not exist.", {
+      modal: true,
+    });
 
   /** @type {LocalProject} */
   const newProj = {
@@ -1238,7 +1240,7 @@ async function openProjectFolder(proj, sync = true) {
       name: proj.PROJECT,
     });
     if (!success)
-      return vscode.window.showWarningMessage(
+      return vscode.window.showErrorMessage(
         "Something went wrong: Invalid Workspace State"
       );
   }
@@ -1251,7 +1253,9 @@ async function openProjectFolder(proj, sync = true) {
 
   try {
     if (!info)
-      return vscode.window.showErrorMessage("Couldn't fetch project info.");
+      return vscode.window.showErrorMessage("Couldn't fetch project info.", {
+        modal: true,
+      });
 
     vscode.commands.executeCommand("workbench.explorer.fileView.focus");
     await openFile(vscode.Uri.file(info.file));
@@ -1296,7 +1300,8 @@ async function openSample(treeItem) {
 
   if (name.includes("♦")) {
     return vscode.window.showWarningMessage(
-      "PREMIUM FEATURE. Please subscribe to 'DroidScript Premium' to open this sample."
+      "PREMIUM FEATURE. Please subscribe to 'DroidScript Premium' to open this sample.",
+      { modal: true }
     );
   }
 
@@ -1311,8 +1316,9 @@ async function openSample(treeItem) {
   await vscode.window.showTextDocument(document);
   if (!closeSamplePlay) {
     // vscode.window.showInformationMessage(`Click PLAY button to run the ${name} sample`);
-    vscode.window.showInformationMessage(
-      `Editing sample programs won't be saved!`
+    vscode.window.showWarningMessage(
+      `Editing sample programs won't be saved!`,
+      { modal: true }
     );
     closeSamplePlay = true;
   }
