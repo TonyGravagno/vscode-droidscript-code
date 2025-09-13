@@ -13,9 +13,12 @@
 - If all endpoints fail, an error message appears and the picker opens.
 - The picker lists past endpoints and accepts new entries with or without a port, defaulting to `:8088` or the current `PORT`.
 - Successful connections move the working endpoint to the head of `serverIPs[]` and save it alongside `serverIP` and `PORT`【F:src/commands/connect-to-droidscript.js】.
-- `websocket.js` opens the WebSocket, sets `CONNECTED` true, logs output, and starts a keep‑alive timer.
-- On close it clears the timer, marks `CONNECTED` false, and invokes the stop callback【F:src/websocket.js】.
-- The setting `droidscript-code.connectionTimeout` is passed to the websocket constructor, and determines how many milliseconds to wait before giving up a failed connection.
+- `dsclient.js` wraps Axios in an `axios` object. `axios.intercept()` logs the request URL and the first 256 bytes of the response when `CONSTANTS.DEBUG` is true (Extension Development Host)【F:src/dsclient.js†L18-L38】.
+- `getServerInfo()` performs the first HTTP request to `${serverIP}/ide?cmd=getinfo` using that wrapper and applies the `droidscript-code.connectionTimeout` setting as the Axios timeout. The setting is not applied to later WebSocket connections【F:src/dsclient.js†L47-L70】.
+- The helper `catchError()` returns `{status: undefined, data: {status: "bad", error}}`; functions such as `listFolder()` and `uploadFile()` propagate this object, and callers like `connect-to-droidscript.js` inspect `status` to detect failures【F:src/dsclient.js†L41-L45】【F:src/dsclient.js†L88-L97】【F:src/dsclient.js†L315-L327】.
+- HTTP requests target endpoints including `/ide?cmd=` operations (`getinfo`, `login`, `list`, `add`, `rename`, `delete`, `run`, `stop`, `execute`, `exec`), `/upload` for file transfers, and direct file paths for reading or existence checks【F:src/dsclient.js†L49-L109】【F:src/dsclient.js†L118-L146】【F:src/dsclient.js†L315-L327】.
+- `websocket.js` uses the `ws` package to open a socket to the device (converting the configured `http` URL to `ws`), sets `CONNECTED` true, writes messages to the **DroidScript Logs** output channel, highlights error lines, and starts a keep‑alive timer that sends `keepalive` every five seconds【F:src/websocket.js†L60-L107】.
+- Closing the socket clears the timer, marks `CONNECTED` false, resets the socket, and invokes the stop callback. The exported `stop()` terminates the socket instead of performing the normal closing handshake to avoid the device's non‑standard `1005` status code【F:src/websocket.js†L28-L37】【F:src/websocket.js†L109-L118】.
 - When the connection is established, `downloadDefinitions()` copies `.d.ts` files from the device into `~/.droidscript/definitions/ts` so UI metadata is cached locally【F:extension.js】.
 
 ## Disconnect behavior
