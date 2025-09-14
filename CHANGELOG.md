@@ -1,11 +1,11 @@
 # Change Log
 
-This 0.3.6 build is currently in alpha, not merged into the official repo. Please test and report findings, noting v0.3.6 Alpha, in the official repo or in the Discord server:
+This 0.3.6 release is currently in beta, not merged into the official repo. Please test and report findings, noting v0.3.6 Beta 01, in the official repo or in the Discord server:
 
 - Server : https://discord.com/invite/MUhvxxbXeK
 - Channel : DroidScript > #vscode
 
-### Version 0.3.6 (Unreleased Alpha) 2025/09/12
+### Version 0.3.6 Beta 01 2025/09/13
 
 - Most dependencies have been updated. Everything should work in VSCode 176-current (103+) on all OS platforms.
 - ECMA Script support set to ES2020. DS "should" support current/ES2025. This is a bump to recognize more current support but developers need to specify their actual/preferred level.
