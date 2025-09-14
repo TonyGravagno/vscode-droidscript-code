@@ -878,7 +878,7 @@ declare class MuiAlert {
 	/** Change displayed text */
 	SetText(text: str): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Removes the focus of the control */
@@ -948,7 +948,7 @@ declare class MuiAlertSimple {
 	/** Set current text to html-formatted text */
 	SetHtml(str: str_htm): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Removes the focus of the control */
@@ -1093,7 +1093,7 @@ declare class MuiAppBar {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -1194,7 +1194,7 @@ declare class MuiAppBarElegant {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -1281,7 +1281,7 @@ declare class MuiBanner {
 	/** Calls a function when buttons are click (prev */
 	SetOnTouch(callback: (this: MuiBanner, isOk: bin, btnText: str) => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Change displayed text */
@@ -1539,7 +1539,7 @@ declare class MuiButtonContained {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -1727,7 +1727,7 @@ declare class MuiButtonElegant {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -1918,7 +1918,7 @@ declare class MuiButtonFlat {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2106,7 +2106,7 @@ declare class MuiButtonOutlined {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2294,7 +2294,7 @@ declare class MuiButtonRaised {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2485,7 +2485,7 @@ declare class MuiButtonRaisedO {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2676,7 +2676,7 @@ declare class MuiButtonRound {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2867,7 +2867,7 @@ declare class MuiButtonRoundO {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3058,7 +3058,7 @@ declare class MuiButtonText {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3243,7 +3243,7 @@ declare class MuiButtonToggle {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3335,7 +3335,7 @@ declare class MuiCard {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3442,7 +3442,7 @@ declare class MuiCheckbox {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3459,7 +3459,7 @@ declare class MuiCheckList {
 	/** Calls a function when the checklist is submitted */
 	SetOnSubmit(callback: (this: MuiCheckList, lst: lst) => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3538,7 +3538,7 @@ declare class MuiColorPicker {
 	/** Calls a function when a user click the OK button */
 	SetOnSelect(callback: (this: MuiColorPicker, color?: str_col) => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Hides the control visually */
@@ -3703,7 +3703,7 @@ declare class MuiDataTable {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3720,7 +3720,7 @@ declare class MuiDatePicker {
 	/** Calls a function when a user click the OK button */
 	SetOnSelect(callback: (this: MuiDatePicker, date: str, yyyy: num_int, mm: num_int, dd: num_int) => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Hides the control visually */
@@ -3778,7 +3778,7 @@ declare class MuiDialog {
 	/** Calls a function when buttons are click (prev */
 	SetOnTouch(callback: (this: MuiDialog, isOk: bin, btnText: str) => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Change displayed text */
@@ -3871,7 +3871,7 @@ declare class MuiDialog {
 
 declare class MuiDivider {
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Hides the control visually */
@@ -4001,7 +4001,7 @@ declare class MuiFAB {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4126,7 +4126,7 @@ declare class MuiFABElegant {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4251,7 +4251,7 @@ declare class MuiFABOutline {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4514,7 +4514,7 @@ declare class MuiList {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4531,7 +4531,7 @@ declare class MuiListDialog {
 	/** Calls a function selects an item in the list */
 	SetOnSelect(callback: (this: MuiListDialog, name: str, index: num_int) => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4766,7 +4766,7 @@ declare class MuiListModern {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4873,7 +4873,7 @@ declare class MuiListSimple {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4896,7 +4896,7 @@ declare class MuiMenu {
 	 */
 	SetList(list: lst): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Hides the control visually */
@@ -4963,7 +4963,7 @@ declare class MuiMenuWithIcon {
 	/** Calls a function when item is click */
 	SetOnSelect(callback: (this: MuiMenuWithIcon, text: str, index: num_int) => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Hides the control visually */
@@ -5045,7 +5045,7 @@ declare class MuiModal {
 	/** Sets a new title to the modal */
 	SetHeaderColor(color?: str_col): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Hides the control visually */
@@ -5337,7 +5337,7 @@ declare class MuiRadio {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -5372,7 +5372,7 @@ declare class MuiRadioButtons {
 	/** Defines position and size on absolute layouts */
 	SetPosition(left: num, top: num, width?: num, height?: num, options?: "px"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Show or Hide the list */
@@ -5488,7 +5488,7 @@ declare class MuiRadioMaterial {
 	/** Defines position and size on absolute layouts */
 	SetPosition(left: num, top: num, width?: num, height?: num, options?: "px"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Show or Hide the list */
@@ -5776,7 +5776,7 @@ declare class MuiSpinner {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -7564,7 +7564,7 @@ declare class MuiTextH1 {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -7782,7 +7782,7 @@ declare class MuiTextH2 {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -8000,7 +8000,7 @@ declare class MuiTextH3 {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -8218,7 +8218,7 @@ declare class MuiTextH4 {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -8436,7 +8436,7 @@ declare class MuiTextH5 {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -8654,7 +8654,7 @@ declare class MuiTextH6 {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -8872,7 +8872,7 @@ declare class MuiTextJumbo {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -9090,7 +9090,7 @@ declare class MuiTextParagraph {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -9308,7 +9308,7 @@ declare class MuiTextSecondary {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -9325,7 +9325,7 @@ declare class MuiTimePicker {
 	/** Calls a function when the user selects a time */
 	SetOnSelect(callback: (this: MuiTimePicker, time: str, hour: num_int, minute: num_int, pos: "AM"|"PM") => void): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Hides the control visually */

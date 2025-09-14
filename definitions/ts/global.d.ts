@@ -60,9 +60,9 @@ declare type num_sec = number;
 declare type str_acc = string;
 /** base64 encoded */
 declare type str_b64 = string;
-/** <br>&nbsp;&nbsp;hexadecimal: “#rrggbb”, “#aarrggbb”<br>&nbsp;&nbsp;colourName: “red”, “green”, ... */
+/** <br>&nbsp;&nbsp;hexadecimal: "#rrggbb", "#aarrggbb"<br>&nbsp;&nbsp;colourName: "red", "green", ... */
 declare type str_col = string;
-/** comma “,” separated */
+/** comma "," separated */
 declare type str_com = string|string[];
 /** comma separated email addresses or names */
 declare type str_eml = string;
@@ -72,7 +72,7 @@ declare type str_flt = string;
 declare type str_fmt = string;
 /** html code */
 declare type str_htm = string;
-/** hexadecimal “00”..“FF” */
+/** hexadecimal "00".."FF" */
 declare type str_hex = string;
 /** integer */
 declare type str_int = string;
@@ -88,31 +88,31 @@ declare type str_mim = string;
 declare type str_mod = string;
 /** number */
 declare type str_num = string;
-/** object id “#id” */
+/** object id "#id" */
 declare type str_oid = string;
-/** “Default”, “Portrait”, “Landscape” */
+/** "Default", "Portrait", "Landscape" */
 declare type str_ort = string;
-/** pipe “|” separated */
+/** pipe "|" separated */
 declare type str_pip = string;
 /** file path or content:// uri */
 declare type str_ptc = string;
-/** path to file or folder ( “/absolute/...” or “relative/...” ) */
+/** path to file or folder ( "/absolute/..." or "relative/..." ) */
 declare type str_pth = string;
-/** path to file ( “/absolute/...” or “relative/...” ) */
+/** path to file ( "/absolute/..." or "relative/..." ) */
 declare type str_ptf = string;
-/** path to folder ( “/absolute/...” or “relative/...” ) */
+/** path to folder ( "/absolute/..." or "relative/..." ) */
 declare type str_ptd = string;
-/** “/absolute/...” path to a file */
+/** "/absolute/..." path to a file */
 declare type str_pfa = string;
-/** “relative/...” path to a file */
+/** "relative/..." path to a file */
 declare type str_pfr = string;
-/** “/absolute/...” path to a folder */
+/** "/absolute/..." path to a folder */
 declare type str_pda = string;
-/** “relative/...” path to a folder */
+/** "relative/..." path to a folder */
 declare type str_pdr = string;
 /** integer in pixels */
 declare type str_pxl = string;
-/** semicolon “;” separated */
+/** semicolon ";" separated */
 declare type str_smc = string;
 /** sql code */
 declare type str_sql = string;

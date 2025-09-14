@@ -142,7 +142,7 @@ declare class DsApp {
 	 * Create and add WebView to Layout
 	 * @param options `AllowZoom`, `AutoZoom`, `Wide`, `FillX/Y`, `NoAccel`, `NoActionBar`, `IgnoreErrors`, `IgnoreSSLErrors`, `NoApp`, `NoCapture`, `NoCors`, `NoLocate`, `NoLongTouch`, `NoPause`, `NoScrollBars`, `Overview`, `Progress`, `ScrollFade`, `UseBasicInput`, `UseBrowser`\
  	 * &emsp; `AllowZoom` - Allows the user to zoom the page\
- 	 * &emsp; `Wide` - force page using “wide” viewport\
+ 	 * &emsp; `Wide` - force page using "wide" viewport\
  	 * &emsp; `NoAccel` - for OrangePi support\
  	 * &emsp; `NoActionBar` - prevents copy/paste popup\
  	 * &emsp; `NoApp` - prevent app.* calls\
@@ -252,7 +252,7 @@ declare class DsApp {
 	/**
 	 * Returns a new CameraView object to access the device camera
 	 * @param options `Front`, `UseBitmap`, `UseABGR`, `NoRotate`, `<id>`, `<resolution>`\
- 	 * &emsp; `<id>` - “front,back,cam0,cam1,cam2,cam3”\
+ 	 * &emsp; `<id>` - "front,back,cam0,cam1,cam2,cam3"\
  	 * &emsp; `<resolution>` - CIF: 352x288\
  	 * &emsp; QQVGA: 160x120\
  	 * &emsp; QVGA: 320x240\
@@ -555,7 +555,7 @@ declare class DsApp {
  	 * &emsp; `Upload` - Allow file uploads\
  	 * &emsp; `NoWelcome` - Ignore index.html\
  	 * &emsp; `Reflect` - Reflect web socket messages back to all clients\
- 	 * &emsp; `<BUFSIZE>` - “ws_64k, ws_128k, ws_512k, ws_1M, ws_5M, ws_10M”
+ 	 * &emsp; `<BUFSIZE>` - "ws_64k, ws_128k, ws_512k, ws_1M, ws_5M, ws_10M"
 	 */
 	CreateWebServer(port: num_int, options?: str_com): DsWebServer;
 
@@ -580,7 +580,7 @@ declare class DsApp {
  	 * &emsp; `Progress` - Shows a progress indicator when loading\
  	 * &emsp; `UseBasicInput` - makes softkeyboard useful for html code editors\
  	 * &emsp; `UseBrowser` - Open links in external browser\
- 	 * &emsp; `Wide` - force page using “wide” viewport
+ 	 * &emsp; `Wide` - force page using "wide" viewport
 	 */
 	CreateWebView(width?: num_frc, height?: num_frc, options?: str_com, zoom?: num_prc): DsWebView;
 
@@ -863,7 +863,7 @@ declare class DsApp {
 	GetPath(): str_pth;
 
 	/**
-	 * GetPermission accepts a list of 'dangerus' classified permissions and returns a list of ungranted permissions in the **callback** function, or in case of only “ExtSDCard” the path URI of the user-selected folder
+	 * GetPermission accepts a list of 'dangerous' classified permissions and returns a list of ungranted permissions in the **callback** function, or in case of only "ExtSDCard" the path URI of the user-selected folder
 	 * @param type `Camera`, `ExtSDcard`, `External`, `Internal`, `Network`, `Notify`, `Storage`, `Overlay`, `SMS`, `Location`, `Calendar`, `Body`, `Contacts`, `Record`, `Phone`, `Biometric`, `Accounts`, `License`, `android.permission.*`, `usb:<pid>`
 	 */
 	GetPermission(type: str_com, callback: (ungranted: str_com|str_uri) => void): void;
@@ -1118,7 +1118,7 @@ declare class DsApp {
 	/** Asynchronously import a .js file */
 	LoadScript(path: str_pth, callback?: (info: { isTrusted: bin }) => void): void;
 
-	/** Load saved text value to remember varibale values between multiple app starts */
+	/** Load saved text value to remember variable values between multiple app starts */
 	LoadText(name: str, dflt?: str, file?: str_ptf): str;
 
 	/** Lock the device */
@@ -1568,7 +1568,7 @@ declare class DsApp {
 	/** Bring your app to the foreground */
 	ToFront(): void;
 
-	/** Translate “Ok” and “Cancel” buttons */
+	/** Translate "Ok" and "Cancel" buttons */
 	Translate(Ok: str, Cancel: str): void;
 
 	/** Unlocks the device */
@@ -1992,7 +1992,7 @@ declare class DsButton {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2097,7 +2097,7 @@ declare class DsCameraView {
 	 * Returns base64 pixel data as raw bitmap, png or jpg format
 	 * @param format `GrayScale`, `JSON`, `<resolution>`, `rawbase64`, `pngbase64`, `jpgbase64`\
  	 * &emsp; `GrayScale` - fastest\
- 	 * &emsp; `JSON` - slowest: “ARGB,ARGB,...”\
+ 	 * &emsp; `JSON` - slowest: "ARGB,ARGB,..."\
  	 * &emsp; `<resolution>` - CIF: 352x288\
  	 * &emsp; QQVGA: 160x120\
  	 * &emsp; QVGA: 320x240\
@@ -2271,7 +2271,7 @@ declare class DsCameraView {
 	/** Change the zoom value of the camera */
 	SetZoom(level: num): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Start the camera preview on the display */
@@ -2465,7 +2465,7 @@ declare class DsCheckBox {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2762,7 +2762,7 @@ declare class DsCodeEdit {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -2982,7 +2982,7 @@ declare class DsDialog {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3327,7 +3327,7 @@ declare class DsGameView {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3501,7 +3501,7 @@ declare class DsGLView {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -3527,7 +3527,7 @@ declare class GLV_ctx {
 
 	/**
 	 * Captures the canvas to a png image
-	 * @param fileName `path relative to “/sdcard”`
+	 * @param fileName `path relative to "/sdcard"`
 	 */
 	capture(x: num_pxl, y: num_pxl, w: num_pxl, h: num_pxl, fileName: str, successCallback?: fnc, errorCallback?: fnc): void;
 
@@ -3852,7 +3852,7 @@ declare class DsImage {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Skews the content */
@@ -4073,7 +4073,7 @@ declare class DsLayout {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4368,7 +4368,7 @@ declare class DsList {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -4437,7 +4437,7 @@ declare class DsListDialog {
 	/** Change the dialog title */
 	SetTitle(title: str): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 }
 
@@ -4651,14 +4651,14 @@ declare class DsNetClient {
 	/**
 	 * Receive an UDP Datagram
 	 * @param options `<BUFSIZ>`\
- 	 * &emsp; `BUFSIZ` - “1k,2k,4k,8k,16k,32k,64k”
+ 	 * &emsp; `BUFSIZ` - "1k,2k,4k,8k,16k,32k,64k"
 	 */
 	ReceiveDatagram(mode?: "US-ASCII"|"UTF-8"|"UTF-16LE"|"UTF-16BE"|"UTF-16", port?: num_int, timeout?: num, options?: str_com): str;
 
 	/**
 	 * Receive UDP datagrams
 	 * @param options `<BUFSIZ>`\
- 	 * &emsp; `BUFSIZ` - “1k,2k,4k,8k,16k,32k,64k”
+ 	 * &emsp; `BUFSIZ` - "1k,2k,4k,8k,16k,32k,64k"
 	 */
 	ReceiveDatagrams(port?: num_int, mode?: "US-ASCII"|"UTF-8"|"UTF-16LE"|"UTF-16BE"|"UTF-16", options?: str_com): void;
 
@@ -5251,7 +5251,7 @@ declare class DsScroller {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -5422,7 +5422,7 @@ declare class DsSeekBar {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -5782,7 +5782,7 @@ declare class DsSpinner {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -5964,7 +5964,7 @@ declare class DsSwitch {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -6335,7 +6335,7 @@ declare class DsTabs {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Switch current tab */
@@ -6568,7 +6568,7 @@ declare class DsText {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -6798,7 +6798,7 @@ declare class DsTextEdit {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -7099,7 +7099,7 @@ declare class DsToggle {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/**
@@ -7366,7 +7366,7 @@ declare class DsVideoView {
 	/** Change the playback volume */
 	SetVolume(left: num_prc, right: num_prc): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Stop video playback */
@@ -7609,7 +7609,7 @@ declare class DsWebView {
 	 * Load html to WebView
 	 * @param options `AllowZoom`, `AutoZoom`, `Wide`, `FillX/Y`, `NoActionBar`, `IgnoreErrors`, `IgnoreSSLErrors`, `NoApp`, `NoCapture`, `NoLocate`, `NoLongTouch`, `NoPause`, `NoRedirect`, `NoScrollBars`, `Overview`, `Progress`, `ScrollFade`, `UseBasicInput`, `UseBrowser`\
  	 * &emsp; `AllowZoom` - Allows the user to zoom the page\
- 	 * &emsp; `Wide` - force page using “wide” viewport\
+ 	 * &emsp; `Wide` - force page using "wide" viewport\
  	 * &emsp; `NoActionBar` - prevents copy/paste popup\
  	 * &emsp; `NoApp` - prevent app.* calls\
  	 * &emsp; `NoCapture` - Disable camera\
@@ -7627,7 +7627,7 @@ declare class DsWebView {
 	 * Load url to WebView
 	 * @param options `AllowZoom`, `AutoZoom`, `Wide`, `FillX/Y`, `NoActionBar`, `IgnoreErrors`, `IgnoreSSLErrors`, `NoApp`, `NoCapture`, `NoLocate`, `NoLongTouch`, `NoPause`, `NoRedirect`, `NoScrollBars`, `Overview`, `Progress`, `ScrollFade`, `UseBasicInput`, `UseBrowser`\
  	 * &emsp; `AllowZoom` - Allows the user to zoom the page\
- 	 * &emsp; `Wide` - force page using “wide” viewport\
+ 	 * &emsp; `Wide` - force page using "wide" viewport\
  	 * &emsp; `NoActionBar` - prevents copy/paste popup\
  	 * &emsp; `NoApp` - prevent app.* calls\
  	 * &emsp; `NoCapture` - Disable camera\
@@ -7760,7 +7760,7 @@ declare class DsWebView {
 	/** Change the visibility mode */
 	SetVisibility(mode: "Show"|"Hide"|"Gone"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 
 	/** Simulate key event */
@@ -7816,7 +7816,7 @@ declare class DsWizard {
 	/** Checks if the control is currently visible */
 	IsVisible(): bin;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 }
 
@@ -7875,7 +7875,7 @@ declare class DsYesNoDialog {
 	/** Change the size of the control */
 	SetSize(width?: num, height?: num, options?: "px"|"sp"|"dip"|"dp"|"mm"|"pt"): void;
 
-	/** Set the visibility to “Show” */
+	/** Set the visibility to "Show" */
 	Show(): void;
 }
 

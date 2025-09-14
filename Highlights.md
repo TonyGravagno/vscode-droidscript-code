@@ -1,3 +1,40 @@
+# DroidScript-Code 0.3.6 Release Notes
+
+Welcome back for a quick follow-up. v0.3.4 was in beta from 2024-5. It was put into production as v0.3.5 in 2025/Aug-Sep. This 0.3.6 version has a few new features:
+
+## dsconfig.json
+
+This configuration file has been moved from the user home ~/dsconfig.json to the already existing ~/.droidscript/dsconfig.json.  
+The file auto-migrates, there's nothing to do. The .droidscript folder is no longer deleted for other updates.
+
+## Connectivity
+
+You can now use the extension more easily with multiple devices, or when your single device is on an IP address that changes frequently. Multiple IP:port endpoints are saved and a dropdown list replaces the earlier single text entry control.
+
+- On clicking Connect, a connection attempt is made to the most recently active device, and the status bar will show it's "Trying" others until a device is found.
+- Click the "Trying" text to cancel the attempts.
+- On cancel or connection failure, a notification is shown and the endpoint list opens for selection or entry of a new address. Only the one selected endpoint is tried.
+- The new VSCode setting `droidscript-code.autoReconnect` defaults to true and causes the try-loop to start automatically on a connection drop. This helps when your device just changes network for a better signal.
+- The setting `droidscript-code.connectionTimeout` defines the milliseconds allowed for initial connection before timeout/failure. The previous default of 5000ms can now be adjusted to suit your network latency. Recommended minimum is 1600.
+
+## Documentation
+
+There's a new [how-it-works.md](how-it-works.md) doc that will help contributors who want to help with this extension. No prior experience with extensions is required.
+
+A new [contributing.md](contributing.md) doc provides specific information to all contributors.
+
+## Random
+
+Small code and text issues were fixed.
+
+The SmartDeclare feature was reviewed, doesn't seem to be working, and will be reviewed again. The best thing to do for type safety is to follow the information added with 0.3.4 and setup ESLint handling.
+
+To see and report issues and enhancement requests, please see [contributing.md](contributing.md).
+
+# DroidScript-Code 0.3.5 Release Notes
+
+Production v0.3.4 plus @dada fixed Samples not loading from device.
+
 # DroidScript-Code 0.3.4 Release Notes
 
 Welcome to the 0.3.4 Release of DroidScript-Code. There are many updates in this version that we hope you'll like. Some of the key highlights include:
@@ -39,7 +76,7 @@ We suggest using `$userHome/DroidScript` as parent directory for all DroidScript
 
 ## Sync Features
 
-When opening a project you are offered a range of sync options. 
+When opening a project you are offered a range of sync options.
 
 **Upload** If you made changes to your project offline you can choose to upload your files to DroidScript.
 
@@ -54,6 +91,7 @@ When opening a project you are offered a range of sync options.
 Here is the full changelog since the last release:
 
 ### Version 0.3.0 (2024-01-23)
+
 - Refactored project management
 - New `Sync Project` dialog options
 - Associate projects with custom location
@@ -67,11 +105,13 @@ Here is the full changelog since the last release:
 - Many other UX improvements
 
 ### Version 0.3.1
+
 - Fixed opening main file when opening projects
-- Focus vscode explorer view when opening projects
+- Focus VSCode explorer view when opening projects
 - Fixed build excluding required source file
 
 ### Version 0.3.2 (2024-01-24)
+
 - Tracking **all** unsaved changes while disconnected, confirm dialog
 - Fixed smartDeclare inferring global numbers
 - Auto detect debug mode
@@ -80,6 +120,7 @@ Here is the full changelog since the last release:
 - Fixed project reload logic when not in DS project
 
 ### Version 0.3.3 (2024-01-26)
+
 - Fixed project sync on initial download
 - Fixed 'Delete App'
 - Improved error highlighting
@@ -87,6 +128,7 @@ Here is the full changelog since the last release:
 - Enabled 'DroidScript: ' command palette
 
 ### Version 0.3.4 (2024-03-29)
+
 - improved IDE command palette
 - re- / disconnect commands & buttons
 - added `.dsproj` activation event

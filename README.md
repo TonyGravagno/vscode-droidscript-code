@@ -4,18 +4,27 @@
 
 [DroidScript](https://droidscript.org/) is an easy to use, portable coding tool which simplifies android app development. It dramatically improves productivity by speeding up development by as much as 10x compared with using the standard development tools.
 
-It’s also an ideal tool for learning JavaScript, you can literally code anywhere with DroidScript, it’s not cloud based and doesn’t require an internet connection.
+It's also an ideal tool for learning JavaScript, you can literally code anywhere with DroidScript, it's not cloud based and doesn't require an internet connection.
 
 Unlike other development tools which take hours to install and eat up gigabytes of disk space, you can install DroidScript in your phone and start using it within 30 seconds!
 
 ### Download DroidScript app from [Google Play](https://play.google.com/store/apps/details?id=com.smartphoneremote.androidscriptfree)
 
-## Requirements
+## Updates for current user/developers
 
-* You should have DroidScript app installed in your phone.
-* The phone and this laptop/desktop should be connected to the same WiFi network.
+For version 0.2.7 and above, the documentation is displayed on the right panel served locally. To view docs smoothly, install the `"Live Preview"` extension [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server).
 
-> For version 0.27 and above, the documentation is displayed on the right panel served locally. To view docs smoothly, install the `"Live Preview"` extension [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode.live-server).
+This version fixes issue where v0.2.x does not connect to the latest VSCode versions.
+
+See detailed [Changelog](chaneglog.md).  
+See [Highlights](highlights.md).  
+New [How It Works](how-it-works.md) doc for extension developers/contributors.
+New [Contributing](contributing.md) ... it's FOSS.
+
+## Extension Requirements
+
+- You should have DroidScript app installed in your phone.
+- The phone and this laptop/desktop should be connected to the same WiFi network.
 
 ## How to connect to DroidScript?
 
@@ -23,8 +32,13 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 
 - Open DroidScript app on your phone and press the WiFi icon to start the DS WiFi IDE server. You should be able to see the IP Address on the popup message.
 - Click the **"Connect"** button in the Projects view or in the Samples view. You can also click the **"Connect to DroidScript"** button in the bottom right corner.
-- A popup will be displayed where to enter **"IP Address"** and **"Password"** if necessary.
-- If the connection fails, a panel will ask you to ensure the DS App is running and that the IP:Port endpoint is correct. The DroidScript Select Device quick pick will open so you can choose an existing endpoint or enter a new one.
+- A dropdown appears where you can pick or type an **"IP Address"**.
+  - Up to 10 recent IP:port endpoints are remembered and cycled through before prompting again. While cycling, the status bar shows `Trying host:port`; click this text to stop and open the dropdown immediately after the current connection timeout.
+  - If you omit the `:port`, the extension assumes `:8088` or the last used port. Selecting or typing an address updates the default endpoint; run **Connect** again to retry.
+- A **"Password"** prompt follows when required.
+- By default the extension automatically retries connection attempts when the server disconnects unexpectedly. This behaviour
+  can be disabled by setting `"droidscript-code.autoReconnect": false` in your VS Code settings.
+- Use `DroidScript: Select Device` from the Command Palette to choose or enter an endpoint without connecting.
 
 ## How to open an app?
 
@@ -41,7 +55,7 @@ Unlike other development tools which take hours to install and eat up gigabytes 
 - Go to **DroidScript** section.
 - In the **"PROJECTS"** view title, click the **`"+"`** icon at the right.
 - A quick pick popup will be shown at the top. Select the type of app and follow the next step to "Enter app name" and "App type".
-> You can also right-click on any app and select the `"Create new app"` item in the context menu.
+  > You can also right-click on any app and select the `"Create new app"` item in the context menu.
 
 ## How to rename an app?
 
@@ -72,7 +86,7 @@ Alternatively you can use the `alt+r` and `alt+s` shortcuts already known from t
 
 - Go to **DroidScript** section.
 - Expand the **`"DOCS"`** view and select **`"Documentation"`** tree item.
-> A live preview window will be open in the right panel of VS Code.
+  > A live preview window will be open in the right panel of VS Code.
 
 ## Samples
 
@@ -89,23 +103,26 @@ This extension provides basic intellisense for `app`, `ui` and `MUI` scopes. You
 
 ## Advanced Intellisense
 
-Since version 2.3.0 you can use the integrated VSCode intellisense to help writing better code. To enable native type checks, right-click on a project in the project tree view and click `Enable Types`. This will add a `jsconfig.json` file to your project with a basic tslint configuration.
+Use the integrated VSCode Intellisense to help with writing better code. To enable native type checks, right-click on a Project in the Project tree view (not file Explorer) and click `Enable Types`. This will add a `jsconfig.json` file to your project with a basic TSLint configuration.
 
-Initially you might see dozens of type errors in your source files. You can use the `Smart Declare Variables` feature by right-clicking on the project or a file in the vscode explorer, which then scans and automatically adds missing variable declarations on the fly. This should greatly reduce the remaining errors which you will have to address on your own.\
-**Note:** SmartDeclare is based on regular expressions and doesnt have a structural understanding of your code. Use at your own risk. Simply undo the changes if the resulting changes are largely undesired.
+Initially you might see dozens of type errors in your source files. You can use the `Smart Declare Variables` feature by right-clicking on the Project or a file in the VSCode Explorer, which then scans and automatically adds missing variable declarations on the fly. This should greatly reduce the remaining errors which you will have to address on your own.\
+**Note:** SmartDeclare (unique and built-in to this project) is based on regular expressions and doesn't have a structural understanding of your code. Use at your own risk. Simply undo the changes if the resulting changes are largely undesired.
 
 ## Best Practices
 
 - Everytime you start editing your project, it is a good idea to reload the files to fetch any changes on the Project. Click the **Reload** button in the bottom of VS Code and select your desired action from the quickpick dialog.
-- When you are working in VS Code, **DO NOT EDIT THE FILES IN THE WIFI IDE**.
+- When you are working in VS Code, **DO NOT EDIT THE FILES IN THE WEB-BASED WIFI IDE**.
 
 ## Known Issues
 
 - Project doesnt automatically reload when replacing the root workspace folder
 - Bottom action buttons are not initially shown
+- In prior versions a folder created in VS wasn't mirrored at all in DS. In 0.3.6 the folder is created but we can't see it in the DS file explorer which only shows a folder if it has a file (we see this in Git/GitHub). Once a file is added to the folder, DS will always shows the folder, even when it is emptied. This should be improved in a later update.
+- On saving a file VSCode may report "Invalid prettier configuration file detected." or "ENOENT: no such file or directory" or similar errors that all mean the file can't be linted or prettified.
 
 <br>
 
 #### Author
+
 - **GineersLife:** - *hamacjumar@gmail.com*
 - **Symbroson:** - *alex-Symbroson@gmail.com*

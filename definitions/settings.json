@@ -1,3 +1,5 @@
 {
-    "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "droidscript-code.autoReconnect": true,
+  "droidscript-code.connectionTimeout": 3000
 }
