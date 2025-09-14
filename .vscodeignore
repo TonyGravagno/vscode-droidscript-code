@@ -8,7 +8,5 @@ vsc-extension-quickstart.md
 TODOs.txt
 test.js
 test.html
-**/jsconfig.json
 **/*.map
-**/.eslintrc.json
 **/*.vsix

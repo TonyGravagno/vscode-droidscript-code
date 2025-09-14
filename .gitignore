@@ -1,15 +1,34 @@
 # ignore these folders
-docs/
+dist
+local
+logs
 node_modules/
+out
+private
 vsix/
+.eslintcache
+.npm
+.stylelintcache
 
-# ignore files of these type
-*.vsix
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
 
 # ignore these files
-vsc-extension-quickstart.md
-test.js
+.DS_Store
+*.log
+*.tsbuildinfo
+*.vsix
+npm-debug.log*
 test.html
+test.js
+vsc-extension-quickstart.md
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
 # developer-choice files
 prettier.config.js
